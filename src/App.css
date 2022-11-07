@@ -44,14 +44,19 @@ footer{
 
 
 #header {
-  background-image: url(./tech.jpg);
   background-position: center;
   height: 500px;
-  width: 100%;
+  width: 50%;
   background-size: cover;
 }
 
 #login {
   height: 500px;
   width: 100%;
+}
+
+#chart {
+  border: 1px solid;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #888888;
 }
