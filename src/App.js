@@ -6,10 +6,12 @@ import About from './pages/About';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
-import Chart from './pages/Chart';
+import Temperature from './pages/Temperature';
 import Menu from './components/Menu';
 import Emission from './pages/Emission';
+import Customview from './pages/Customview';
 import {Routes, Route} from 'react-router-dom';
+
 
 function App() {
   return (
@@ -22,8 +24,9 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
       <Route path='/menu' element={<Menu />} />
-      <Route path='/chart' element={<Chart />} />
+      <Route path='/temperature' element={<Temperature />} />
       <Route path='/emission' element={<Emission />} />
+      <Route path='/customview' element={<Customview />} />
     </Routes>
     </div>
     </>

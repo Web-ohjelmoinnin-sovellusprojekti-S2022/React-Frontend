@@ -12,8 +12,17 @@ export default function NavBar() {
                 <div className="navbar-nav">
                     <Link className="nav-link" to="/about">About</Link>
                     <Link className="nav-link" to="/login">Login</Link>
-                    <Link className="nav-link" to="/chart">Charts</Link>
-                    <Link className="nav-link" to="/menu">Menu</Link>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="/temperature">Temperature charts</a></li>
+                            <li><a class="dropdown-item" href="/emission">Emission charts</a></li>
+                            <li><a class="dropdown-item" href="/customview">Make your own view</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
