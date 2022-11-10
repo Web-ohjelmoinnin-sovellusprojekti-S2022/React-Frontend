@@ -3,50 +3,64 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 
+const Temperature = () => {
+  const [chartData, setChartData] = useState({})
+  const [isloading, setisloading] = useState(true)
 
-
-const productSales = [
-  { year: 1993, sales: 500 },
-  { year: 1994, sales: 69 },
-  { year: 1995, sales: 700 },
-  { year: 1996, sales: 700 }
-]
-
-export default function Temperature(){
-  const [temp, setTemp] = useState([]);
-  const [chartData, setChartData] = useState({
-    labels: temp.map(d => d.year),
-    datasets: [
-      {
-        label: "Product sales",
-        data: temp.map(d => d.anomaly),
-        backgroundColor: [
-          '#99346C', '#E6DA85', '#E66EB0', '#57D8E6'
-        ]
-      }
-    ],
-  })
-  useEffect(() => {
-    const address = 'http://localhost:8080/v1/climateGlobal';
-
-    axios.get(address)
-      .then((response) => {
-        console.log(response.data[0]);
-        setTemp(response.data[0]);
+  const Chart = () => {
+    let year = []
+    let anomaly = []
+    axios.get("http://localhost:8080/v1/climateGlobal")
+      .then(response => {
+        for (const dataObj of response.data) {
+          year.push(parseInt(dataObj.year))
+          anomaly.push(dataObj.anomaly)
+        }
+        setChartData({
+          labels: year,
+          datasets: [
+            {
+              label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022',
+              data: anomaly,
+              backgroundColor: [
+                '#0000FF'
+              ]
+            }
+          ],
+        })
+        setisloading(false)
       }).catch(error => {
-        alert(error);
-      });
+        alert(error)
+        setisloading(true)
+      }
+
+      )
+  }
+
+  useEffect(() => {
+    Chart()
   }, [])
 
-  return (
-    <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} class="p-5 mb-4 bg-light rounded-3">
-      <div class="container-fluid py-5">
-        <div><Bar data={chartData} /></div>
-        <div><Line data={chartData} /></div>
-        <div><Pie data={chartData} /></div>
+  if(isloading === true){
+    return(
+      <p>Loading</p>
+    )
+  }
+
+  else {
+    return (
+    <>
+      <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
+        <div className="container-fluid py-5">
+          <div><Line data={chartData} options={{
+            responsive: true,
+          }} /></div>
+        </div>
       </div>
-    </div >
-  );
+    </>
+  )
+  }
+  
+
 }
-
-
+export default Temperature
