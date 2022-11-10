@@ -5,8 +5,7 @@ import axios from 'axios';
 
 const Temperature = () => {
   const [chartData, setChartData] = useState({})
-  const [year, setYear] = useState([])
-  const [anomaly, setAnomaly] = useState([])
+  const [isloading, setisloading] = useState(true)
 
   const Chart = () => {
     let year = []
@@ -26,8 +25,10 @@ const Temperature = () => {
             }
           ],
         })
+        setisloading(false)
       }).catch(error => {
         alert(error)
+        setisloading(true)
       }
 
       )
@@ -37,7 +38,14 @@ const Temperature = () => {
     Chart()
   }, [])
 
-  return (
+  if(isloading === true){
+    return(
+      <p>Loading</p>
+    )
+  }
+
+  else {
+    return (
     <>
       <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} class="p-5 mb-4 bg-light rounded-3">
         <div className="container-fluid py-5">
@@ -48,6 +56,8 @@ const Temperature = () => {
       </div>
     </>
   )
+  }
+  
 
 }
 export default Temperature
