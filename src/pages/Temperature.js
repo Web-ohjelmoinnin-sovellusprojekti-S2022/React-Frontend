@@ -20,8 +20,11 @@ const Temperature = () => {
           labels: year,
           datasets: [
             {
-              label: 'Anomaly',
+              label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022',
               data: anomaly,
+              backgroundColor: [
+                '#0000FF'
+              ]
             }
           ],
         })
@@ -47,9 +50,9 @@ const Temperature = () => {
   else {
     return (
     <>
-      <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} class="p-5 mb-4 bg-light rounded-3">
+      <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
         <div className="container-fluid py-5">
-          <div><Bar data={chartData} options={{
+          <div><Line data={chartData} options={{
             responsive: true,
           }} /></div>
         </div>

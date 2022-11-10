@@ -36,12 +36,21 @@ footer{
 
 .nav-link{
   color: #f5f5f5; 
+  margin-right: 10px;
 }
 
 .navbar-brand{
   color: #f5f5f5;
+  margin-left: 10px;
 }
 
+.dropdown {
+  margin-right: 10px;
+}
+
+.dropdown-item {
+  text-align: left;
+}
 
 #header {
   background-position: center;
