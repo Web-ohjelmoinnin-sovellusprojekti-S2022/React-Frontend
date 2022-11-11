@@ -11,9 +11,14 @@ import Menu from './components/Menu';
 import Emission from './pages/Emission';
 import Customview from './pages/Customview';
 import {Routes, Route} from 'react-router-dom';
+import setAuthToken from './components/setAuthToken';
 
 
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+      setAuthToken(token);
+  }
   return (
     <>
     <NavBar />
@@ -21,9 +26,9 @@ function App() {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/about' element={<About />} />
-      <Route path='/login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
       <Route path='/menu' element={<Menu />} />
+      <Route path='/login' element={<Login/>} />
       <Route path='/temperature' element={<Temperature />} />
       <Route path='/emission' element={<Emission />} />
       <Route path='/customview' element={<Customview />} />
