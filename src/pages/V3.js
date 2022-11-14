@@ -3,7 +3,8 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 
-const Temperature = () => {
+
+const Mauna = () => {
   const [chartData, setChartData] = useState({})
   const [isloading, setisloading] = useState(true)
 
@@ -63,4 +64,5 @@ const Temperature = () => {
   
 
 }
-export default Temperature
+
+export default Mauna

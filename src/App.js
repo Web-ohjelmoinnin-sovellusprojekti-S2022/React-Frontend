@@ -6,7 +6,7 @@ import About from './pages/About';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Footer from './components/Footer';
-import Temperature from './pages/Temperature';
+import Temperature from './pages/V1-2';
 import Menu from './components/Menu';
 import Emission from './pages/Emission';
 import Customview from './pages/Customview';
@@ -24,7 +24,7 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
       <Route path='/menu' element={<Menu />} />
-      <Route path='/temperature' element={<Temperature />} />
+      <Route path='/globaltemp' element={<Temperature />} />
       <Route path='/emission' element={<Emission />} />
       <Route path='/customview' element={<Customview />} />
     </Routes>
