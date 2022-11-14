@@ -18,9 +18,8 @@ export default function Login() {
                 const token = response.data
                 localStorage.setItem("token", token)
                 setAuthToken(token)
-
             }).catch(error => {
-                alert(error)
+                alert("Väärä käyttäjänimi ja/tai salasana.")
             })
     }
 
@@ -47,7 +46,7 @@ export default function Login() {
                             />
                         </Form.Group>
                         <Button block="true" size="lg" type="submit"  >
-                            Login
+                            Kirjaudu sisään
                         </Button>
                     </Form>
                 </div>

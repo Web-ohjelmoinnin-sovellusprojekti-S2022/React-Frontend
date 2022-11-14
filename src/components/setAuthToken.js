@@ -2,10 +2,10 @@ import axios from 'axios';
  
 const setAuthToken = (token) => {
    if (token) {
-       axios.get("http://localhost:8080/private", { headers: token })
+       axios.defaults.headers.common["Authorization"] = 'Bearer ${token}'
    }
    else{
-
+        console.log("Invalid token")
    }
 }
 export default setAuthToken;
