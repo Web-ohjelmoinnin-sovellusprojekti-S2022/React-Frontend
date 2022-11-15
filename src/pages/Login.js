@@ -80,6 +80,8 @@ export default function Login() {
         return (
             <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                 <div className="container-fluid py-5">
+                    <h3>Kirjaudu sisään</h3>
+                    <br></br>
                     <div className="Login">
                         <Form onSubmit={handleSubmit}>
                             <Form.Group size="lg" controlId="user">
@@ -99,6 +101,7 @@ export default function Login() {
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                             </Form.Group>
+                            <br></br>
                             <Button block="true" size="lg" type="submit"  >
                                 Kirjaudu sisään
                             </Button>

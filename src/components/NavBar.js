@@ -42,6 +42,7 @@ export default function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link" to="/about">Tietoa</Link>
+                        <Link className="nav-link" to="/register">Luo käyttäjä</Link>
                         <Link className="nav-link" to="/login">Kirjaudu sisään</Link>
                         <div className="dropdown">
                             <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

@@ -14,6 +14,7 @@ import { Routes, Route, Navigate, Redirect } from 'react-router-dom';
 import RouteGuard from "./components/RouteGuard"
 import setAuthToken from './components/setAuthToken';
 import Logout from './pages/Logout';
+import Register from './pages/Register';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path='/login' element={<Login />}/>
           <Route path='/customview' element={<Customview />} />
           <Route path='/logout' element={<Logout/>}/>
+          <Route path='/register' element={<Register/>}/>
         </Routes>
       </div>
     </>
