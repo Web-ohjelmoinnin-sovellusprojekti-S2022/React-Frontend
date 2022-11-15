@@ -10,8 +10,10 @@ import Temperature from './pages/V1-2';
 import Menu from './components/Menu';
 import Emission from './pages/Emission';
 import Customview from './pages/Customview';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Redirect } from 'react-router-dom';
 import RouteGuard from "./components/RouteGuard"
+import setAuthToken from './components/setAuthToken';
+import Logout from './pages/Logout';
 
 
 function App() {
@@ -26,7 +28,9 @@ function App() {
           <Route path='/menu' element={<Menu />} />
           <Route path='/globaltemp' element={<Temperature />} />
           <Route path='/emission' element={<Emission />} />
+          <Route path='/login' element={<Login />}/>
           <Route path='/customview' element={<Customview />} />
+          <Route path='/logout' element={<Logout/>}/>
         </Routes>
       </div>
     </>
