@@ -3,16 +3,21 @@ import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function Register(){
     
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [cpassword, setCPassword] = useState("");
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         if(password != cpassword){
             alert("Salasanat eivät täsmää")
+        }
+        else if(password == ""){
+            alert("Salasana ei saa olla tyhjä")
         }
         e.preventDefault()
         axios.post("http://localhost:8080/register", {},
@@ -23,7 +28,9 @@ export default function Register(){
                 }
             }).then(response => {
                 console.log(response)
+                navigate('/')
             }).catch(error => {
+                alert("Käyttäjänimi on jo olemassa")
                 console.log(error)
             })
     }
