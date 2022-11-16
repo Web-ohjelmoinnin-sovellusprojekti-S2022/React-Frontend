@@ -10,10 +10,9 @@ function Temperature() {
     const [chartDataM, setChartDataM] = useState({})
     const [chartV3, setChartV3] = useState({})
     const [chartV3M, setChartV3M] = useState({})
-    const [chartV4de08, setChartV4de08] = useState({})
-    const [chartV4dss, setChartV4dss] = useState({})
     const [chartV4de082, setChartV4de082] = useState({})
     const [chartV5, setChartV5] = useState({})
+    const [chartV6, setChartV6] = useState({})
     const [isloading, setisloading] = useState(true)
 
     const V1 = () => {
@@ -270,12 +269,43 @@ function Temperature() {
             )
     }
 
+    const V6 = () => {
+        let year = []
+        let co2_ppm = []
+       
+        axios.get("http://localhost:8080/v6/climateV6")
+            .then(response => {
+                for (const dataObj of response.data) {
+                    year.push(dataObj.year)
+                    co2_ppm.push(dataObj.co2_ppm)
+                }
+                setChartV6({
+                    labels: year,
+                    datasets: [
+                        {
+                            label: 'CO2',
+                            data: co2_ppm,
+                            backgroundColor: [
+                                '#FF0000'
+                            ]
+                        }
+                    ],
+                })
+
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            }
+            )
+    }
+
 
     useEffect(() => {
         V1()
         V1Monthly()
         V3()
         V5()
+        V6()
     }, [])
 
     if (isloading === true) {
@@ -322,6 +352,14 @@ function Temperature() {
                     <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 </h1>
                     <div className="container-fluid py-5">
                         <div><Line data={chartV5} options={{
+                            responsive: true,
+                        }} /></div>
+                    </div>
+                </div>
+                <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
+                    <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta) </h1>
+                    <div className="container-fluid py-5">
+                        <div><Line data={chartV6} options={{
                             responsive: true,
                         }} /></div>
                     </div>
