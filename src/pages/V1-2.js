@@ -9,6 +9,8 @@ function Temperature() {
     const [chartDataV2, setChartDataV2] = useState({})
     const [chartDataM, setChartDataM] = useState({})
     const [chartV3, setChartV3] = useState({})
+    const [chartV3M, setChartV3M] = useState({})
+    const [chartV4, setChartV4] = useState({})
     const [isloading, setisloading] = useState(true)
 
     const V1 = () => {
@@ -128,7 +130,11 @@ function Temperature() {
 
     const V3 = () => {
         let year = []
+        let yearM = []
+        let year2 = []
         let mean = []
+        let meanM = []
+        let ppm = []
         axios.get("http://localhost:8080/v3/climateV3")
             .then(response => {
                 for (const dataObj of response.data) {
@@ -141,6 +147,48 @@ function Temperature() {
                         {
                             label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet',
                             data: mean,
+                            backgroundColor: [
+                                '#0000FF'
+                            ]
+                        }
+                    ],
+                })
+    
+            })
+            axios.get("http://localhost:8080/v3/climateV3monthly")
+            .then(response => {
+                for (const dataObj of response.data) {
+                    yearM.push(dataObj.year)
+                    meanM.push(dataObj.mean)
+                }
+                setChartV3M({
+                    labels: yearM,
+                    datasets: [
+                        {
+                            label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet kuukausittain',
+                            data: meanM,
+                            backgroundColor: [
+                                '#0000FF'
+                            ]
+                        }
+                    ],
+                })
+    
+            })
+            axios.get("http://localhost:8080/v4/climateV4")
+            .then(response => {
+                for (const dataObj of response.data) {
+                    year2.push(dataObj.de082_year)
+                    ppm.push(dataObj.de082_ppm)
+                    console.log(dataObj.de082_year)
+                    console.log(dataObj.de082_ppm)
+                }
+                setChartV4({
+                    labels: year2,
+                    datasets: [
+                        {
+                            label: 'Ilmakehän hiilidioksidipitoisuudet',
+                            data: ppm,
                             backgroundColor: [
                                 '#0000FF'
                             ]
@@ -177,6 +225,7 @@ function Temperature() {
                         <div><Line data={chartData} options={{
                             responsive: true,
                         }} /></div>
+                        <h1>Anders Mobergin et al. Paleoklimatologiset lämpötilatiedot</h1>
                         <div><Line data={chartDataV2} options={{
                             responsive: true,
                         }} /></div>
@@ -189,6 +238,14 @@ function Temperature() {
                     <h1>Mauna Loan ilmakehän hiilidioksidipitoisuudet 1959-2021</h1>
                     <div className="container-fluid py-5">
                         <div><Line data={chartV3} options={{
+                            responsive: true,
+                        }} /></div>
+                        <div><Line data={chartV3M} options={{
+                            responsive: true,
+                        }} /></div>
+                        <br></br>
+                        <h1>Ilmakehän hiilidioksidipitoisuudet perustuen etelämantereen jääkairauksiin</h1>
+                        <div><Line data={chartV4} options={{
                             responsive: true,
                         }} /></div>
                     </div>
