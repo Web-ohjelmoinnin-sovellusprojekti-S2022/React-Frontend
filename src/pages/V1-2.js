@@ -10,7 +10,10 @@ function Temperature() {
     const [chartDataM, setChartDataM] = useState({})
     const [chartV3, setChartV3] = useState({})
     const [chartV3M, setChartV3M] = useState({})
-    const [chartV4, setChartV4] = useState({})
+    const [chartV4de08, setChartV4de08] = useState({})
+    const [chartV4dss, setChartV4dss] = useState({})
+    const [chartV4de082, setChartV4de082] = useState({})
+    const [chartV5, setChartV5] = useState({})
     const [isloading, setisloading] = useState(true)
 
     const V1 = () => {
@@ -131,10 +134,15 @@ function Temperature() {
     const V3 = () => {
         let year = []
         let yearM = []
-        let year2 = []
+        let de_year = []
+        let dss_year = []
+        let de08_year = []
+        let V4_years = []
         let mean = []
         let meanM = []
         let ppm = []
+        let dssppm = []
+        let de08ppm = []
         axios.get("http://localhost:8080/v3/climateV3")
             .then(response => {
                 for (const dataObj of response.data) {
@@ -153,9 +161,9 @@ function Temperature() {
                         }
                     ],
                 })
-    
+
             })
-            axios.get("http://localhost:8080/v3/climateV3monthly")
+        axios.get("http://localhost:8080/v3/climateV3monthly")
             .then(response => {
                 for (const dataObj of response.data) {
                     yearM.push(dataObj.year)
@@ -173,29 +181,88 @@ function Temperature() {
                         }
                     ],
                 })
-    
+
             })
-            axios.get("http://localhost:8080/v4/climateV4")
+        axios.get("http://localhost:8080/v4/climateV4")
             .then(response => {
                 for (const dataObj of response.data) {
-                    year2.push(dataObj.de082_year)
-                    ppm.push(dataObj.de082_ppm)
-                    console.log(dataObj.de082_year)
-                    console.log(dataObj.de082_ppm)
+                    if (dataObj.de082_year != 0) {
+                        de_year.push(dataObj.de082_year)
+                        ppm.push(dataObj.de082_ppm)
+                    }
+                    if (dataObj.dss_year != 0) {
+                        dssppm.push(dataObj.dss_ppm)
+                        dss_year.push(dataObj.dss_year)
+                    }
+                    if (dataObj.de08_year != 0) {
+                        de08_year.push(dataObj.de08_year)
+                        de08ppm.push(dataObj.de08_ppm)
+                    }
+                    
                 }
-                setChartV4({
-                    labels: year2,
+                V4_years.push(de_year)
+                V4_years.push(dss_year)
+                V4_years.push(de08_year)
+                console.log(V4_years)
+                setChartV4de082({
+                    labels: V4_years[0],
                     datasets: [
                         {
-                            label: 'Ilmakehän hiilidioksidipitoisuudet',
+                            label: 'de082_ppm',
                             data: ppm,
                             backgroundColor: [
                                 '#0000FF'
                             ]
+                        },
+                        {
+                            label: 'dss_ppm',
+                            data: dssppm,
+                            backgroundColor: [
+                                '#0000FF'
+                            ]
+                        },
+                        {
+                            label: 'de08_ppm',
+                            data: de08ppm,
+                            backgroundColor: [
+                                '#0000FF'
+                            ]
+                        }
+
+                    ],
+                    
+                })
+               
+
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            }
+            )
+    }
+    const V5 = () => {
+        let year = []
+        let ppmv = []
+       
+        axios.get("http://localhost:8080/v5/climateV5")
+            .then(response => {
+                for (const dataObj of response.data) {
+                    year.push(dataObj.year)
+                    ppmv.push(dataObj.ppmv)
+                }
+                setChartV5({
+                    labels: year,
+                    datasets: [
+                        {
+                            label: 'Vostok CO2',
+                            data: ppmv,
+                            backgroundColor: [
+                                '#FF0000'
+                            ]
                         }
                     ],
                 })
-    
+
             }).catch(error => {
                 alert(error)
                 setisloading(true)
@@ -208,6 +275,7 @@ function Temperature() {
         V1()
         V1Monthly()
         V3()
+        V5()
     }, [])
 
     if (isloading === true) {
@@ -245,11 +313,20 @@ function Temperature() {
                         }} /></div>
                         <br></br>
                         <h1>Ilmakehän hiilidioksidipitoisuudet perustuen etelämantereen jääkairauksiin</h1>
-                        <div><Line data={chartV4} options={{
+                        <div><Line data={chartV4de082} options={{
                             responsive: true,
                         }} /></div>
                     </div>
                 </div>
+                <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
+                    <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 </h1>
+                    <div className="container-fluid py-5">
+                        <div><Line data={chartV5} options={{
+                            responsive: true,
+                        }} /></div>
+                    </div>
+                </div>
+
 
             </>
         )
