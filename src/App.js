@@ -18,6 +18,7 @@ import Register from './pages/Register';
 
 
 function App() {
+
   return (
     <>
       <NavBar />
@@ -29,10 +30,10 @@ function App() {
           <Route path='/menu' element={<Menu />} />
           <Route path='/globaltemp' element={<Temperature />} />
           <Route path='/emission' element={<Emission />} />
-          <Route path='/login' element={<Login />}/>
+          <Route path='/login' element={<Login />} />
           <Route path='/customview' element={<Customview />} />
-          <Route path='/logout' element={<Logout/>}/>
-          <Route path='/register' element={<Register/>}/>
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/register' element={<Register />} />
         </Routes>
       </div>
     </>

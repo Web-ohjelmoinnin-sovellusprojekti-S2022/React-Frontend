@@ -2,7 +2,7 @@ import axios from "axios"
 import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import setAuthToken from "../components/setAuthToken";
 export default function Login() {
     const [user, setUser] = useState("");
