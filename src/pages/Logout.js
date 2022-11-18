@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom"
+
+
 export default function Logout() {
+    const nav = useNavigate()
     localStorage.removeItem("token")
-    return <p>Logged out</p>
+    nav("/login")
+    window.location.reload(false)
 }

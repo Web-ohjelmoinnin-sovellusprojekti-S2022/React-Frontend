@@ -23,6 +23,7 @@ export default function Login() {
                 setAuthToken(token)
                 console.log(token)
                 navigate('/')
+                window.location.reload(false);
             }).catch(error => {
                 alert("Väärä käyttäjänimi ja/tai salasana.")
                 console.log(error)

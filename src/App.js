@@ -32,7 +32,7 @@ function App() {
             <Route path='/emission' element={<Emission />} />
             <Route path='/login' element={<Login />} />
             <Route path='/customview' element={<Customview />} />
-            <Route path='/logout' element={<Logout />} />
+            <Route path='/logout' element={<Logout />}/>
             <Route path='/register' element={<Register />} />
           </Routes>
       </div>

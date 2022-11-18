@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Logout from "../pages/Logout";
+
+
+
+
 
 const NavBar = () => {
 
@@ -12,7 +17,7 @@ const NavBar = () => {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div className="navbar-nav">
                     <Link className="nav-link" to="/about">Tietoa</Link>
-                    <Link className="nav-link" to="/logout">Kirjaudu Ulos</Link>
+                    <Link className="nav-link" to="/logout"onClick={Logout}>Kirjaudu Ulos</Link>
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Kaaviot
