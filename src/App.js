@@ -32,7 +32,8 @@ export default function App() {
     scales:{
         x:{
             type: 'linear',
-            min: 1006
+            min: 1000,
+            max: 2000,
         },
         y: {
             type: 'linear'
