@@ -1,4 +1,4 @@
-import data from './data/companydata.json';
+
 import {DateTime} from 'luxon';
 import 'chartjs-adapter-luxon';
 import {Chart} from 'chart.js/auto'
