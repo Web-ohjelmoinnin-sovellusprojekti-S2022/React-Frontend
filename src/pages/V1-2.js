@@ -133,7 +133,7 @@ function Temperature() {
     const V3 = () => {
         let year = []
         let yearM = []
-        let de_year = []
+        let de082_year = []
         let dss_year = []
         let de08_year = []
         let V4_years = []
@@ -184,45 +184,24 @@ function Temperature() {
             })
         axios.get("http://localhost:8080/v4/climateV4")
             .then(response => {
-                for (const dataObj of response.data) {
-                    if (dataObj.de082_year != 0) {
-                        de_year.push(dataObj.de082_year)
-                        ppm.push(dataObj.de082_ppm)
-                    }
-                    if (dataObj.dss_year != 0) {
-                        dssppm.push(dataObj.dss_ppm)
-                        dss_year.push(dataObj.dss_year)
-                    }
-                    if (dataObj.de08_year != 0) {
-                        de08_year.push(dataObj.de08_year)
-                        de08ppm.push(dataObj.de08_ppm)
-                    }
-                    
-                }
-                V4_years.push(de_year)
+                setChartV4de082(response.data);
+
+                
+                V4_years.push(de082_year)
                 V4_years.push(dss_year)
                 V4_years.push(de08_year)
-                console.log(V4_years)
+                //console.log(V4_years)
+
                 setChartV4de082({
-                    labels: V4_years[0],
                     datasets: [
                         {
-                            label: 'de082_ppm',
-                            data: ppm,
-                            backgroundColor: [
-                                '#0000FF'
-                            ]
-                        },
-                        {
-                            label: 'dss_ppm',
-                            data: dssppm,
-                            backgroundColor: [
-                                '#0000FF'
-                            ]
-                        },
-                        {
-                            label: 'de08_ppm',
-                            data: de08ppm,
+                            label: 'DSS',
+                            data: chartV4de082,
+                            parsing: {
+                                xAxisKey: "dss_year",
+                                yAxisKey: "dss_ppm",
+                            },
+                            pointRadius: 1,
                             backgroundColor: [
                                 '#0000FF'
                             ]
