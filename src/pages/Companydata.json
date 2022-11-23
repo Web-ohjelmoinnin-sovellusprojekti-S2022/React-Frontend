@@ -1,0 +1,26 @@
+{
+    "revenues":
+    [
+        {"time":"1993", "revenue":"11500"},
+        {"time":"1994", "revenue":"20000"},
+        {"time":"1995", "revenue":"18000"},
+        {"time":"1996", "revenue":"23000"},
+        {"time":"1997", "revenue":"20000"}
+    ],
+    "investments":[
+        {"time":"1993-02-13", "expenses":"10000"},
+        {"time":"1993-04-22", "expenses":"12000"},
+        {"time":"1993-06-01", "expenses":"14000"},
+        {"time":"1993-12-12", "expenses":"3000"},
+        {"time":"1994-02-01", "expenses":"7000"},
+        {"time":"1994-03-30", "expenses":"11000"},
+        {"time":"1994-08-23", "expenses":"9500"},
+        {"time":"1995-01-11", "expenses":"13000"},
+        {"time":"1995-03-21", "expenses":"2000"},
+        {"time":"1995-05-17", "expenses":"3000"},
+        {"time":"1995-11-02", "expenses":"9000"},
+        {"time":"1995-12-01", "expenses":"7000"},
+        {"time":"1996-05-10", "expenses":"1500"},
+        {"time":"1996-06-14", "expenses":"8000"}
+    ]
+}

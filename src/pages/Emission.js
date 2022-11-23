@@ -3,14 +3,14 @@ import { Bar, Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 
-const Temperature = () => {
+const Emission = () => {
   const [chartData, setChartData] = useState({})
   const [isloading, setisloading] = useState(true)
 
-  const Chart = () => {
+  const V8 = () => {
     let year = []
     let anomaly = []
-    axios.get("http://localhost:8080/v1/climateGlobal")
+    axios.get("http://localhost:8080/v8/climateV8")
       .then(response => {
         for (const dataObj of response.data) {
           year.push(parseInt(dataObj.year))
@@ -35,10 +35,46 @@ const Temperature = () => {
       }
 
       )
+      const config = {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: (ctx) => 'Chart.js Line Chart - stacked=' + ctx.chart.options.scales.y.stacked
+            },
+            tooltip: {
+              mode: 'index'
+            },
+          },
+          interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Month'
+              }
+            },
+            y: {
+              stacked: true,
+              title: {
+                display: true,
+                text: 'Value'
+              }
+            }
+          }
+        }
+      };
   }
 
   useEffect(() => {
-    Chart()
+    V8()
   }, [])
 
   if(isloading === true){
@@ -63,4 +99,4 @@ const Temperature = () => {
   
 
 }
-export default Temperature
+export default Emission

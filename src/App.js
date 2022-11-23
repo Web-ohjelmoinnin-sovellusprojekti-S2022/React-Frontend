@@ -15,6 +15,7 @@ import NotAuthNavBar from './components/NotAuthNavBar';
 import useAuth from './components/useAuth';
 import { auth } from './components/useAuth';
 
+
 function App() {
   const auth = useAuth()
 
