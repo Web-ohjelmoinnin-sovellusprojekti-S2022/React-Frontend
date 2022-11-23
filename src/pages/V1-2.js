@@ -10,7 +10,6 @@ function Temperature() {
     const [chartDataM, setChartDataM] = useState({})
     const [chartV3, setChartV3] = useState({})
     const [chartV3M, setChartV3M] = useState({})
-    const [chartV4de082, setChartV4de082] = useState({})
     const [V4Data, setV4Data] = useState({})
     const [chartV5, setChartV5] = useState({})
     const [chartV6, setChartV6] = useState({})
@@ -181,13 +180,10 @@ function Temperature() {
 
     }
     const V4 = () => {
-
         axios.get("http://localhost:8080/v4/climateV4")
             .then(response => {
                 setV4Data(response.data)
             
-
-
 
             }).catch(error => {
                 alert(error)
@@ -264,84 +260,10 @@ function Temperature() {
     }
 
     const V7 = () => {
-        let year1 = []
-        let temp1 = []
-        let year2 = []
-        let ppm2 = []
-
         axios.get("http://localhost:8080/v7/climateV7")
             .then(response => {
-                for (const dataObj of response.data) {
-                    if (dataObj.year1 !== 0) {
-                        year1.push(dataObj.year1)
-                        temp1.push(dataObj.temp1)
-                    }
-                    if (dataObj.year2 !== 0) {
-                        year2.push(dataObj.year2)
-                        ppm2.push(dataObj.ppm2)
-                    }
-
-                }
-                const data = {
-                    labels: year1,
-                    datasets: [{
-                        axis: 'y',
-                        label: 'My First Dataset',
-                        data: temp1,
-                        fill: false,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(201, 203, 207)'
-                        ],
-                        borderWidth: 1
-                    }]
-                };
-                const config = {
-                    type: 'line',
-                    data: data,
-                    options: {
-                        indexAxis: 'y',
-                        scales: {
-                            x: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                };
-                setChartV7({
-                    labels: year1,
-                    datasets: [
-                        {
-                            label: 'CO2',
-                            data: temp1,
-                            backgroundColor: [
-                                '#FF0000'
-                            ]
-                        },
-                        {
-                            label: 'CO2',
-                            data: ppm2,
-                            backgroundColor: [
-                                '#FF0000'
-                            ]
-                        }
-
-                    ],
-                })
+                setChartV7(response.data)
+                    
 
             }).catch(error => {
                 alert(error)
@@ -379,7 +301,7 @@ function Temperature() {
         }
     };
 
-    const graphData = {
+    const graphDataV4 = {
         datasets: [
 
             {
@@ -427,6 +349,79 @@ function Temperature() {
         ],
     }
 
+    // ----------------------------------------------V7-------------------------------------------------
+    console.log(chartV7)
+    const configV7 = {
+          responsive: true,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          stacked: false,
+          scales: {
+            x: {
+                type: 'linear'
+            },
+            y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+            },
+            
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              grid: {
+                drawOnChartArea: false, 
+              },
+              elements: {
+                point: {
+                    radius: 0
+                }
+            },
+            },
+          }
+      
+      };
+     const jaa = [];
+     for (let i = 0; i < chartV7.length; i++) {
+        jaa.push(chartV7[i].year1);
+     }
+      const dataV7 = {
+      
+        datasets: [
+          {
+            showLine: false,
+            label: 'Co2 ppm',
+            data: chartV7,
+            borderColor: '#00FBFF',
+            backgroundColor: '#00FBFF',
+            borderWidth: 2,
+            parsing: {
+                xAxisKey: 'year2',
+                yAxisKey: 'ppm2'
+            },
+            yAxisID: 'y',
+            pointRadius: 2,
+          },
+          {
+            showLine: false,
+            label: 'Pintalämpötilan muutos',
+            data: chartV7,
+            borderColor: '#FF0000',
+            backgroundColor: '#FF0000',
+            parsing: {
+                xAxisKey: 'year1',
+                yAxisKey: 'temp1'
+            },
+            yAxisID: 'y1',
+            xAxisID: 'x',
+            pointRadius: 2,
+          }
+        ]
+      };
+//---------------------------------------------------------------------------------------------------------------------
     if (isloading === true) {
         return (
             <p>Loading</p>
@@ -462,7 +457,7 @@ function Temperature() {
                         }} /></div>
                         <br></br>
                         <h1>Ilmakehän hiilidioksidipitoisuudet perustuen etelämantereen jääkairauksiin (v4)</h1>
-                        <div><Line data={graphData} options={options} /></div>
+                        <div><Line data={graphDataV4} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
@@ -484,9 +479,7 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v7) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV7} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={dataV7} options={configV7} /></div>
                     </div>
                 </div>
 
