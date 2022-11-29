@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 
@@ -10,6 +10,7 @@ const Emission = () => {
   const [country, setCountry] = useState([])
   const [dataset, setDataset] = useState([])
   const [isloading, setisloading] = useState(true)
+  const [V9Data, setV9Data] = useState([])
   let datasets = []
 
   const V8 = () => {
@@ -43,7 +44,7 @@ const Emission = () => {
         for (const dataObj of response.data) {
           setCountry(country => [...country, dataObj.country.replace('\r', '')])
           }
-          setisloading(false)
+          //setisloading(false)
       }).catch(error => {
         alert(error)
         setisloading(true)
@@ -52,6 +53,25 @@ const Emission = () => {
       )
    
   }
+
+ const V9 = () => {
+  let emissions = []
+  let sector = []
+  axios.get("http://localhost:8080/v9/climateV9sector")
+    .then(response => {
+      for (const dataObj of response.data) {
+        sector.push(dataObj.sector)
+        emissions.push(dataObj.emissions)
+      }
+      setV9Data({
+        labels: sector,
+        datasets: emissions
+      })
+      console.log(emissions)
+      console.log(sector)
+      setisloading(false)
+    })
+ }
 
   const countries = country.map(element => {
     return element.toLowerCase();
@@ -113,6 +133,11 @@ const Emission = () => {
     }
 
   };
+
+  const optionsV9 = {
+    type: 'doughnut',
+    responsive: true,
+  }
   let jaa = years.toString()
   let year = jaa.split(',')
   const data = {
@@ -120,10 +145,10 @@ const Emission = () => {
     datasets: datasets
   };
 
-
   useEffect(() => {
     V8()
     V8Countries()
+    V9()
   }, [])
 
   if (isloading === true) {
@@ -138,6 +163,7 @@ const Emission = () => {
         <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
           <div className="container-fluid py-5">
             <div><Line data={data} options={options}/></div>
+            <div><Doughnut data={V9Data} options={optionsV9}/> </div>
           </div>
         </div>
       </>
