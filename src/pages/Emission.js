@@ -86,9 +86,6 @@ const Emission = () => {
     })
   }
 
-  console.log("haloo")
-  console.log(countries)
-
   const options = {
     type: 'line',
     responsive: true,

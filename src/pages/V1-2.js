@@ -39,21 +39,24 @@ function Temperature() {
                             data: anomaly,
                             backgroundColor: [
                                 '#0000FF'
-                            ]
+                            ],
+                            borderColor: '#0000FF',
                         },
                         {
                             label: 'Pohjoisen lämpötilapoikkeamat 1850-2022',
                             data: anomaly2,
                             backgroundColor: [
                                 '#FE370C'
-                            ]
+                            ],
+                            borderColor: '#FE370C',
                         },
                         {
                             label: 'Etelän lämpötilapoikkeamat 1850-2022',
                             data: anomaly3,
                             backgroundColor: [
                                 '#FEE40C'
-                            ]
+                            ],
+                            borderColor: '#FEE40C',
                         }
                     ],
                 })
@@ -72,7 +75,9 @@ function Temperature() {
                             data: v2temp,
                             backgroundColor: [
                                 '#0CFF00'
-                            ]
+                            ],
+                            borderColor: '#0CFF00',
+
                         },
 
                     ],
@@ -105,21 +110,24 @@ function Temperature() {
                             data: anomaly,
                             backgroundColor: [
                                 '#0000FF'
-                            ]
+                            ],
+                            borderColor: '#0000FF',
                         },
                         {
                             label: 'Pohjoisen lämpötilapoikkeamat 1850-2022',
                             data: anomaly2,
                             backgroundColor: [
                                 '#FE370C'
-                            ]
+                            ],
+                            borderColor: '#FE370C',
                         },
                         {
                             label: 'Etelän lämpötilapoikkeamat 1850-2022',
                             data: anomaly3,
                             backgroundColor: [
                                 '#FEE40C'
-                            ]
+                            ],
+                            borderColor: '#FEE40C',
                         }
                     ],
                 })
@@ -150,8 +158,9 @@ function Temperature() {
                             label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet',
                             data: mean,
                             backgroundColor: [
-                                '#0000FF'
-                            ]
+                                '#8A459A'
+                            ],
+                            borderColor: '#8A459A',
                         }
                     ],
                 })
@@ -171,7 +180,8 @@ function Temperature() {
                             data: meanM,
                             backgroundColor: [
                                 '#0000FF'
-                            ]
+                            ],
+                            borderColor: '#0000FF',
                         }
                     ],
                 })
@@ -192,13 +202,7 @@ function Temperature() {
             )
     }
 
-   
 
-
-
-
-
-    
     const V5 = () => {
         let year = []
         let ppmv = []
@@ -206,18 +210,21 @@ function Temperature() {
         axios.get("http://localhost:8080/v5/climateV5")
             .then(response => {
                 for (const dataObj of response.data) {
-                    year.push(dataObj.year)
+                    year.push(dataObj.year + "BP")
                     ppmv.push(dataObj.ppmv)
                 }
+                const yearReverse = [...year].reverse();
+                const ppmvReverse = [...ppmv].reverse();
                 setChartV5({
-                    labels: year,
+                    labels: yearReverse,
                     datasets: [
                         {
                             label: 'Vostok CO2',
-                            data: ppmv,
+                            data: ppmvReverse,
                             backgroundColor: [
-                                '#FF0000'
-                            ]
+                                '#FFC100'
+                            ],
+                            borderColor: '#FFC100',
                         }
                     ],
                 })
@@ -236,18 +243,22 @@ function Temperature() {
         axios.get("http://localhost:8080/v6/climateV6")
             .then(response => {
                 for (const dataObj of response.data) {
-                    year.push(dataObj.year)
+                    year.push(dataObj.year * -1)
                     co2_ppm.push(dataObj.co2_ppm)
                 }
+
+                const yearReverse = [...year].reverse();
+                const co2Reverse = [...co2_ppm].reverse();
                 setChartV6({
-                    labels: year,
+                    labels: yearReverse,
                     datasets: [
                         {
                             label: 'CO2',
-                            data: co2_ppm,
+                            data: co2Reverse,
                             backgroundColor: [
-                                '#FF0000'
-                            ]
+                                '#01DCDF'
+                            ],
+                            borderColor: '#01DCDF',
                         }
                     ],
                 })
@@ -263,7 +274,10 @@ function Temperature() {
         axios.get("http://localhost:8080/v7/climateV7")
             .then(response => {
                 setChartV7(response.data)
-                    
+                for (const dataObj of response.data) {
+                   
+                }
+ 
 
             }).catch(error => {
                 alert(error)
@@ -285,13 +299,62 @@ function Temperature() {
 
     const options = {
         responsive: true,
+        showLine: true,
+        type: 'line',
+        pointRadius: false,
+        scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Vuodet'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'CO2'
+              }
+            }
+          }
+    };
+    const optionsV1 = {
+        responsive: true,
+        showLine: true,
+        type: 'line',
+        pointRadius: false,
+        scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Vuodet'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: '°C'
+              }
+            }
+          }
+    };
+    //--------------------------------------------V4---------------------------------------------
+    const optionsV4 = {
+        responsive: true,
         scales: {
             x: {
                 type: 'linear',
+                title: {
+                    display: true,
+                    text: 'Vuodet'
+                  }
 
             },
             y: {
-                type: 'linear'
+                type: 'linear',
+                title: {
+                    display: true,
+                    text: 'CO2'
+                  }
             }
         },
         elements: {
@@ -308,7 +371,7 @@ function Temperature() {
                 showLine: false,
                 label: "DSS",
                 data: V4Data,
-                backgroundColor: ['#222222'],
+                backgroundColor: '#222222',
                 borderColor: '#000000',
                 borderWidth: 2,
                 parsing: {
@@ -322,7 +385,7 @@ function Temperature() {
                 showLine: false,
                 label: "DE08",
                 data: V4Data,
-                backgroundColor: ['#42f566'],
+                backgroundColor: '#42f566',
                 borderColor: '#42f566',
                 borderWidth: 2,
                 parsing: {
@@ -336,8 +399,8 @@ function Temperature() {
                 showLine: false,
                 label: "DE082",
                 data: V4Data,
-                backgroundColor: ['#00000'],
-                borderColor: '#000000',
+                backgroundColor: '#FF0000',
+                borderColor: '#FF0000',
                 borderWidth: 2,
                 parsing: {
                     xAxisKey: 'de082_year',
@@ -348,9 +411,8 @@ function Temperature() {
 
         ],
     }
-
+    //--------------------------------------------------------------------------------------------------
     // ----------------------------------------------V7-------------------------------------------------
-    console.log(chartV7)
     const configV7 = {
           responsive: true,
           interaction: {
@@ -360,12 +422,21 @@ function Temperature() {
           stacked: false,
           scales: {
             x: {
-                type: 'linear'
+                type: 'linear',
+                title: {
+                    display: true,
+                    text: 'Tuhannet vuodet ennen nykyhetkeä'
+                  },
+                  reverse: true,
             },
             y: {
                 type: 'linear',
                 display: true,
                 position: 'left',
+                title: {
+                    display: true,
+                    text: 'CO2'
+                  }
             },
             
             y1: {
@@ -378,21 +449,22 @@ function Temperature() {
               elements: {
                 point: {
                     radius: 0
-                }
+                },
             },
+            title: {
+                display: true,
+                text: '°C'
+              },
             },
           }
       
       };
-     const jaa = [];
-     for (let i = 0; i < chartV7.length; i++) {
-        jaa.push(chartV7[i].year1);
-     }
+    
       const dataV7 = {
       
         datasets: [
           {
-            showLine: false,
+            showLine: true,
             label: 'Co2 ppm',
             data: chartV7,
             borderColor: '#00FBFF',
@@ -403,10 +475,10 @@ function Temperature() {
                 yAxisKey: 'ppm2'
             },
             yAxisID: 'y',
-            pointRadius: 2,
+            pointRadius: false,
           },
           {
-            showLine: false,
+            showLine: true,
             label: 'Pintalämpötilan muutos',
             data: chartV7,
             borderColor: '#FF0000',
@@ -417,7 +489,7 @@ function Temperature() {
             },
             yAxisID: 'y1',
             xAxisID: 'x',
-            pointRadius: 2,
+            pointRadius: false,
           }
         ]
       };
@@ -434,50 +506,37 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartData} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={chartData} options={optionsV1} /></div>
+                         <h1>Lämpötilatiedot vuosilta 1850-2022 (kuukausittain)</h1>
+                        <div><Line data={chartDataM} options={optionsV1} /></div>
                         <h1>Anders Mobergin et al. Paleoklimatologiset lämpötilatiedot</h1>
-                        <div><Line data={chartDataV2} options={{
-                            responsive: true,
-                        }} /></div>
-                        <div><Line data={chartDataM} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={chartDataV2} options={optionsV1} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Mauna Loan ilmakehän hiilidioksidipitoisuudet 1959-2021 (v3)</h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV3} options={{
-                            responsive: true,
-                        }} /></div>
-                        <div><Line data={chartV3M} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={chartV3} options={options} /></div>
+                        <div><Line data={chartV3M} options={options} /></div>
                         <br></br>
                         <h1>Ilmakehän hiilidioksidipitoisuudet perustuen etelämantereen jääkairauksiin (v4)</h1>
-                        <div><Line data={graphDataV4} options={options} /></div>
+                        <div><Line data={graphDataV4} options={optionsV4} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 (v5) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV5} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={chartV5} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v6) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV6} options={{
-                            responsive: true,
-                        }} /></div>
+                        <div><Line data={chartV6} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
-                    <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v7) </h1>
+                    <h1>Lämpötilan kehitys maapallolla 2 miljoonan vuoden ajalta (v7) </h1>
                     <div className="container-fluid py-5">
                         <div><Line data={dataV7} options={configV7} /></div>
                     </div>
