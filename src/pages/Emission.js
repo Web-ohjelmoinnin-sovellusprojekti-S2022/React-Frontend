@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Emission = () => {
   const [chartData, setChartData] = useState({})
+  const [chartDataV9, setChartDataV9] = useState({})
   const [years, setYears] = useState({})
   const [country, setCountry] = useState([])
   const [dataset, setDataset] = useState([])
@@ -52,6 +53,20 @@ const Emission = () => {
       )
    
   }
+  const V9 = () => {
+    axios.get("http://localhost:8080/v8/climateV8countries")
+      .then(response => {
+      
+          setisloading(false)
+      }).catch(error => {
+        alert(error)
+        setisloading(true)
+      }
+
+      )
+   
+  }
+
 
   const countries = country.map(element => {
     return element.toLowerCase();
@@ -95,19 +110,19 @@ const Emission = () => {
       intersect: false
     },
     pointRadius: 0,
-    fill: true,
+    fill: false,
     scales: {
       x: {
         title: {
           display: true,
-          text: 'Year'
+          text: 'Vuodet'
         }
       },
       y: {
         stacked: true,
         title: {
           display: true,
-          text: 'Value'
+          text: 'Maakohtaiset CO2-päästöt '
         }
       }
     }
