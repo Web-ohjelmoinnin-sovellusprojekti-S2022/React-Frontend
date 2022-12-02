@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import NavBar from './components/NavBar';
 import NotAuthNavBar from './components/NotAuthNavBar';
 import useAuth from './components/useAuth';
+import DeleteAccount from './components/deleteAccount';
 import { auth } from './components/useAuth';
 
 
@@ -35,6 +36,7 @@ function App() {
             <Route path='/customview' element={<Customview />} />
             <Route path='/logout' element={<Logout />}/>
             <Route path='/register' element={<Register />} />
+            <Route path='/deleteacc' element={<DeleteAccount/>} />
           </Routes>
       </div>
     </>

@@ -11,8 +11,8 @@ const Emission = () => {
   const [country, setCountry] = useState([])
   const [dataset, setDataset] = useState([])
   const [isloading, setisloading] = useState(true)
-  const [V9Data, setV9Data] = useState([])
   let datasets = []
+  let V9Data = []
 
   const V8 = () => {
     let year = []
@@ -54,7 +54,7 @@ const Emission = () => {
       )
    
   }
-  const V9 = () => {
+  /*const V9 = () => {
     axios.get("http://localhost:8080/v8/climateV8countries")
       .then(response => {
       
@@ -66,7 +66,7 @@ const Emission = () => {
 
       )
    
-  }
+  }*/
 
 
  const V9 = () => {
@@ -78,11 +78,11 @@ const Emission = () => {
         sector.push(dataObj.sector)
         emissions.push(dataObj.emissions)
       }
-      setV9Data({
+      V9Data = {
         labels: sector,
         datasets: emissions
-      })
-      console.log(emissions)
+      }
+      console.log(V9Data)
       console.log(sector)
       setisloading(false)
     })
