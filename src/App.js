@@ -13,13 +13,14 @@ import Register from './pages/Register';
 import NavBar from './components/NavBar';
 import NotAuthNavBar from './components/NotAuthNavBar';
 import useAuth from './components/useAuth';
-import DeleteAccount from './components/deleteAccount';
+import DeleteAccount from './pages/deleteAccount';
 import { auth } from './components/useAuth';
+import { useEffect } from 'react';
 
 
 function App() {
   const auth = useAuth()
-
+  
   return (
     <> 
     {auth ? <NavBar/> : <NotAuthNavBar/> }
