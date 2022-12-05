@@ -375,7 +375,9 @@ const Emission = () => {
     let subSectors = []
     let emissions = []
     let sector = []
-    if (V9Data.labels[0] != "Energy") {
+    console.log(V9Data.labels[0])
+
+    if (V9Data.labels[0] != "Transport" && V9Data.labels[0] != "Livestock & Manure" && V9Data.labels[0] != "Landfills" && V9Data.labels[0] != "Cement") {
       axios.get("http://localhost:8080/v9/climateV9subSector")
         .then(response => {
           for (const dataObj of response.data) {
@@ -404,7 +406,7 @@ const Emission = () => {
           setisloading(false)
         })
 
-    } if (V9Data.labels[0] === "Transport" || V9Data.labels[0] === "Livestock & Manure" || V9Data.labels[0] === "Landfills" || V9Data.labels[0] === "Cement") {
+    } if (V9Data.labels[0] === "Transport" || V9Data.labels[0] === "Livestock & Manure" || V9Data.labels[0] === "Landfills" || V9Data.labels[0] === "Cement" ) {
       axios.get("http://localhost:8080/v9/climateV9sector")
         .then(response => {
           for (const dataObj of response.data) {

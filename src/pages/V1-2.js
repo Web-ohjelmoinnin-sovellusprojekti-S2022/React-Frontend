@@ -25,15 +25,17 @@ function Temperature() {
     const [chartV5, setChartV5] = useState({})
     const [chartV6, setChartV6] = useState({})
     const [chartV7, setChartV7] = useState({})
+    const [dataV3a, setDatav3a] = useState({})
     const [isloading, setisloading] = useState(true)
+    let dataV1 = []
+    let year1 = []
+    let co2_ppm = []
+    let year = []
+    let ppmv = []
+    let dataV3 = []
 
     const V1 = () => {
-        let dataV1 = []
-        let year1 = []
-        let co2_ppm = []
-        let year = []
-        let ppmv = []
-        let dataV3 = []
+
 
         axios.get("http://localhost:8080/v1/climateV1")
             .then(response => {
@@ -45,14 +47,15 @@ function Temperature() {
             .then(response => {
                 for (const dataObj of response.data) {
                     dataV1.push(dataObj)
+
                 }
             })
         axios.get("http://localhost:8080/v2/climateV2")
             .then(response => {
                 for (const dataObj of response.data) {
                     dataV1.push(dataObj)
+
                 }
-                console.log(dataV1)
                 setChartData({
                     datasets: [
                         {
@@ -143,29 +146,41 @@ function Temperature() {
                     ],
                 })
             })
- 
+
 
         axios.get("http://localhost:8080/v3/climateV3")
             .then(response => {
+                console.log("1")
                 for (const dataObj of response.data) {
                     dataV3.push(dataObj)
+
                 }
-            })
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            }
+            )
 
         axios.get("http://localhost:8080/v3/climateV3monthly")
             .then(response => {
+                console.log("2")
                 for (const dataObj of response.data) {
                     dataV3.push(dataObj)
-
                 }
 
-            })
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            }
+            )
         axios.get("http://localhost:8080/v4/climateV4")
             .then(response => {
+                console.log("3")
                 for (const dataObj of response.data) {
                     dataV3.push(dataObj)
 
                 }
+                console.log(dataV3)
 
                 setChartV3M({
                     datasets: [
@@ -182,6 +197,7 @@ function Temperature() {
                             },
                         },
                         {
+                            showLine: false,
                             label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet kuukausittain',
                             data: dataV3.map(d => convertToLuxonDate(d)),
                             backgroundColor: [
@@ -236,7 +252,11 @@ function Temperature() {
                         }
                     ],
                 })
-            })
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            }
+            )
 
         axios.get("http://localhost:8080/v5/climateV5")
             .then(response => {
@@ -295,6 +315,7 @@ function Temperature() {
                 }
 
                 setisloading(false)
+
             }).catch(error => {
                 alert(error)
                 setisloading(true)
@@ -472,6 +493,9 @@ function Temperature() {
             <p>Loading</p>
         )
     }
+    /*<div><Line data={chartV5} options={options} /></div>
+    <div><Line data={chartV6} options={options} /></div>
+    <div><Line data={dataV7} options={configV7} /></div>*/
 
     else {
         return (
@@ -479,7 +503,7 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartData} options={optionsV1} /></div>
+                        {/*<div><Line data={chartData} options={optionsV1} /></div>*/}
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
@@ -491,19 +515,16 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 (v5) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV5} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v6) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={chartV6} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilan kehitys maapallolla 2 miljoonan vuoden ajalta (v7) </h1>
                     <div className="container-fluid py-5">
-                        <div><Line data={dataV7} options={configV7} /></div>
                     </div>
                 </div>
 
