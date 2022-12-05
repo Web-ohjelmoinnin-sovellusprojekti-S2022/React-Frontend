@@ -17,7 +17,18 @@ function convertToLuxonDate2(dataObj) {
 function convertToLuxonDate3(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.de08_year) }
 }
-
+function convertToLuxonDateV1(dataObj) {
+    return { ...dataObj, year1: DateTime.fromISO(dataObj.year1) }
+}
+function convertToLuxonDateV2(dataObj) {
+    return { ...dataObj, year2: DateTime.fromISO(dataObj.year2) }
+}
+function convert(dataObj) {
+    return { ...dataObj, year2: dataObj.year }
+}
+function convertM(dataObj) {
+    return { ...dataObj, year1: dataObj.year }
+}
 
 function Temperature() {
     const [chartData, setChartData] = useState({})
@@ -25,7 +36,6 @@ function Temperature() {
     const [chartV5, setChartV5] = useState({})
     const [chartV6, setChartV6] = useState({})
     const [chartV7, setChartV7] = useState({})
-    const [dataV3a, setDatav3a] = useState({})
     const [isloading, setisloading] = useState(true)
     let dataV1 = []
     let year1 = []
@@ -34,229 +44,222 @@ function Temperature() {
     let ppmv = []
     let dataV3 = []
 
+    //V1 ja 2
+    let V1Axios = "http://localhost:8080/v1/climateV1"
+    let V1M = "http://localhost:8080/v1/climateV1monthly"
+    let V2 = "http://localhost:8080/v2/climateV2"
+    const requestV1Axios = axios.get(V1Axios);
+    const requestV1M = axios.get(V1M);
+    const requestV2 = axios.get(V2);
+
+    //V3
+    let one = "http://localhost:8080/v3/climateV3"
+    let two = "http://localhost:8080/v3/climateV3monthly"
+    let three = "http://localhost:8080/v4/climateV4"
+    const requestOne = axios.get(one);
+    const requestTwo = axios.get(two);
+    const reuestThree = axios.get(three);
+
+
     const V1 = () => {
+        axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
+            for (const dataObj of responses[0].data) {
+                dataV1.push(dataObj)
+            }
+            for (const dataObj of responses[1].data) {
+                dataV1.push(convertM(dataObj))
+            }
+            for (const dataObj of responses[2].data) {
+                dataV1.push(convert(dataObj))
+            }
 
+            console.log(dataV1)
+            
+            setChartData({
+                datasets: [
+                    {
+                        label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022',
+                        data: dataV1,
+                        backgroundColor: [
+                            '#8A459A'
+                        ],
+                        borderColor: '#8A459A',
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'anomaly_g'
+                        },
+                    },
+                    {
+                        label: 'Pohjoiset lämpötilapoikkeamat 1850-2022',
+                        data: dataV1,
+                        backgroundColor: [
+                            '#D0D700'
+                        ],
+                        borderColor: '#D0D700',
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'anomaly_n'
+                        },
+                    },
+                    {
+                        label: 'Eteläiset lämpötilapoikkeamat 1850-2022',
+                        data: dataV1,
+                        backgroundColor: [
+                            '#FF0000'
+                        ],
+                        borderColor: '#FF0000',
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'anomaly_s'
+                        },
+                    },
+                    {
+                        label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022 kuukausittain',
+                        data: dataV1,
+                        backgroundColor: [
+                            '#00FFDC'
+                        ],
+                        borderColor: '#00FFDC',
+                        parsing: {
+                            xAxisKey: 'year1',
+                            yAxisKey: 'anomaly_g'
+                        },
+                    },
+                    {
+                        label: 'Pohjoiset lämpötilapoikkeamat 1850-2022 kuukausittain',
+                        data: dataV1,
+                        backgroundColor: [
+                            '#0051FF'
+                        ],
+                        borderColor: '#0051FF',
+                        parsing: {
+                            xAxisKey: 'year1',
+                            yAxisKey: 'anomaly_n'
+                        },
+                    },
+                    {
+                        label: 'Eteläiset lämpötilapoikkeamat 1850-2022 kuukausittain',
+                        data: dataV1.map(d => convertToLuxonDateV1(d)),
+                        backgroundColor: [
+                            '#F700FF'
+                        ],
+                        borderColor: '#F700FF',
+                        parsing: {
+                            xAxisKey: 'year1',
+                            yAxisKey: 'anomaly_s'
+                        },
+                    },
+                    {
+                        label: 'Anders Mobergin et al. Paleoklimatologiset lämpötilatiedot',
+                        data: dataV1.map(d => convertToLuxonDateV2(d)),
+                        backgroundColor: [
+                            '#34D700'
+                        ],
+                        borderColor: '#34D700',
+                        parsing: {
+                            xAxisKey: 'year2',
+                            yAxisKey: '_t'
+                        },
+                    }
 
-        axios.get("http://localhost:8080/v1/climateV1")
-            .then(response => {
-                for (const dataObj of response.data) {
-                    dataV1.push(dataObj)
-                }
-            })
-        axios.get("http://localhost:8080/v1/climateV1monthly")
-            .then(response => {
-                for (const dataObj of response.data) {
-                    dataV1.push(dataObj)
-
-                }
-            })
-        axios.get("http://localhost:8080/v2/climateV2")
-            .then(response => {
-                for (const dataObj of response.data) {
-                    dataV1.push(dataObj)
-
-                }
-                setChartData({
-                    datasets: [
-                        {
-                            label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#8A459A'
-                            ],
-                            borderColor: '#8A459A',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_g'
-                            },
-                        },
-                        {
-                            label: 'Pohjoiset lämpötilapoikkeamat 1850-2022',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#D0D700'
-                            ],
-                            borderColor: '#D0D700',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_n'
-                            },
-                        },
-                        {
-                            label: 'Eteläiset lämpötilapoikkeamat 1850-2022',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#FF0000'
-                            ],
-                            borderColor: '#FF0000',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_s'
-                            },
-                        },
-                        {
-                            label: 'Maailmanlaajuiset lämpötilapoikkeamat 1850-2022 kuukausittain',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#00FFDC'
-                            ],
-                            borderColor: '#00FFDC',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_g'
-                            },
-                        },
-                        {
-                            label: 'Pohjoiset lämpötilapoikkeamat 1850-2022 kuukausittain',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#0051FF'
-                            ],
-                            borderColor: '#0051FF',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_n'
-                            },
-                        },
-                        {
-                            label: 'Eteläiset lämpötilapoikkeamat 1850-2022 kuukausittain',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#F700FF'
-                            ],
-                            borderColor: '#F700FF',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'anomaly_s'
-                            },
-                        },
-                        {
-                            label: 'Anders Mobergin et al. Paleoklimatologiset lämpötilatiedot',
-                            data: dataV1.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#34D700'
-                            ],
-                            borderColor: '#34D700',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: '_t'
-                            },
-                        },
-
-                    ],
-                })
+                ],
             })
 
+        })).catch(error => {
+            alert(error)
+            setisloading(true)
+        })
 
-        axios.get("http://localhost:8080/v3/climateV3")
-            .then(response => {
-                console.log("1")
-                for (const dataObj of response.data) {
-                    dataV3.push(dataObj)
 
-                }
-            }).catch(error => {
-                alert(error)
-                setisloading(true)
+        axios.all([requestOne, requestTwo, reuestThree]).then(axios.spread((...responses) => {
+            for (const dataObj of responses[0].data) {
+                dataV3.push(dataObj)
+
             }
-            )
+            for (const dataObj of responses[1].data) {
+                dataV3.push(dataObj)
 
-        axios.get("http://localhost:8080/v3/climateV3monthly")
-            .then(response => {
-                console.log("2")
-                for (const dataObj of response.data) {
-                    dataV3.push(dataObj)
-                }
-
-            }).catch(error => {
-                alert(error)
-                setisloading(true)
             }
-            )
-        axios.get("http://localhost:8080/v4/climateV4")
-            .then(response => {
-                console.log("3")
-                for (const dataObj of response.data) {
-                    dataV3.push(dataObj)
+            for (const dataObj of responses[2].data) {
+                dataV3.push(dataObj)
 
-                }
-                console.log(dataV3)
-
-                setChartV3M({
-                    datasets: [
-                        {
-                            label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet',
-                            data: dataV3.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#8A459A'
-                            ],
-                            borderColor: '#8A459A',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: '_mean'
-                            },
-                        },
-                        {
-                            showLine: false,
-                            label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet kuukausittain',
-                            data: dataV3.map(d => convertToLuxonDate(d)),
-                            backgroundColor: [
-                                '#0000FF'
-                            ],
-                            borderColor: '#0000FF',
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'mean'
-                            },
-                        },
-                        {
-                            showLine: false,
-                            label: "DSS",
-                            data: dataV3.map(d => convertToLuxonDate1(d)),
-                            backgroundColor: '#222222',
-                            borderColor: '#000000',
-                            borderWidth: 2,
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'dss_ppm'
-                            },
-                            pointRadius: 2,
-                        },
-
-                        {
-                            showLine: false,
-                            label: "DE08",
-                            data: dataV3.map(d => convertToLuxonDate3(d)),
-                            backgroundColor: '#42f566',
-                            borderColor: '#42f566',
-                            borderWidth: 2,
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'de08_ppm'
-                            },
-                            pointRadius: 2,
-                        },
-
-                        {
-                            showLine: false,
-                            label: "DE082",
-                            data: dataV3.map(d => convertToLuxonDate2(d)),
-                            backgroundColor: '#FF0000',
-                            borderColor: '#FF0000',
-                            borderWidth: 2,
-                            parsing: {
-                                xAxisKey: 'year',
-                                yAxisKey: 'de082_ppm'
-                            },
-                            pointRadius: 2,
-                        }
-                    ],
-                })
-            }).catch(error => {
-                alert(error)
-                setisloading(true)
             }
-            )
+            setChartV3M({
+                datasets: [
+                    {
+                        label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet',
+                        data: dataV3.map(d => convertToLuxonDate(d)),
+                        backgroundColor: [
+                            '#8A459A'
+                        ],
+                        borderColor: '#8A459A',
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: '_mean'
+                        },
+                    },
+                    {
+
+                        label: 'Havaijin Mauna Loan ilmakehän hiilidioksidipitoisuudet kuukausittain',
+                        data: dataV3.map(d => convertToLuxonDate(d)),
+                        backgroundColor: [
+                            '#0000FF'
+                        ],
+                        borderColor: '#0000FF',
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'mean'
+                        },
+                    },
+                    {
+                        showLine: false,
+                        label: "DSS",
+                        data: dataV3.map(d => convertToLuxonDate1(d)),
+                        backgroundColor: '#222222',
+                        borderColor: '#000000',
+                        borderWidth: 2,
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'dss_ppm'
+                        },
+                        pointRadius: 2,
+                    },
+
+                    {
+                        showLine: false,
+                        label: "DE08",
+                        data: dataV3.map(d => convertToLuxonDate3(d)),
+                        backgroundColor: '#42f566',
+                        borderColor: '#42f566',
+                        borderWidth: 2,
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'de08_ppm'
+                        },
+                        pointRadius: 2,
+                    },
+
+                    {
+                        showLine: false,
+                        label: "DE082",
+                        data: dataV3.map(d => convertToLuxonDate2(d)),
+                        backgroundColor: '#FF0000',
+                        borderColor: '#FF0000',
+                        borderWidth: 2,
+                        parsing: {
+                            xAxisKey: 'year',
+                            yAxisKey: 'de082_ppm'
+                        },
+                        pointRadius: 2,
+                    }
+                ],
+            })
+        })).catch(error => {
+            alert(error)
+            setisloading(true)
+        })
+
+
 
         axios.get("http://localhost:8080/v5/climateV5")
             .then(response => {
@@ -349,6 +352,7 @@ function Temperature() {
     };
     const optionsV1 = {
         responsive: true,
+        type: 'line',
         scales: {
             x: {
                 type: 'time',
@@ -358,8 +362,7 @@ function Temperature() {
                 title: {
                     display: true,
                     text: 'Vuodet'
-                }
-
+                },
             },
             y: {
                 type: 'linear',
@@ -493,9 +496,7 @@ function Temperature() {
             <p>Loading</p>
         )
     }
-    /*<div><Line data={chartV5} options={options} /></div>
-    <div><Line data={chartV6} options={options} /></div>
-    <div><Line data={dataV7} options={configV7} /></div>*/
+
 
     else {
         return (
@@ -503,7 +504,7 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
                     <div className="container-fluid py-5">
-                        {/*<div><Line data={chartData} options={optionsV1} /></div>*/}
+                        <div><Line data={chartData} options={optionsV1} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
@@ -515,16 +516,19 @@ function Temperature() {
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 (v5) </h1>
                     <div className="container-fluid py-5">
+                        <div><Line data={chartV5} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v6) </h1>
                     <div className="container-fluid py-5">
+                        <div><Line data={chartV6} options={options} /></div>
                     </div>
                 </div>
                 <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilan kehitys maapallolla 2 miljoonan vuoden ajalta (v7) </h1>
                     <div className="container-fluid py-5">
+                        <div><Line data={dataV7} options={configV7} /></div>
                     </div>
                 </div>
 
