@@ -495,10 +495,19 @@ const Emission = () => {
         <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
           <div className="container-fluid py-5">
             <h1>Maakohtaiset CO2-päästöt</h1>
+            <p>(V8) Mittaustulosten kuvaus: <a href='https://www.icos-cp.eu/science-and-impact/global-carbon-budget/2021'>https://www.icos-cp.eu/science-and-impact/global-carbon-budget/2021</a></p>
+            <p>(V8) Datalähde: <a href='https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D'>https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D</a></p>
             <br/>
             <div><Line data={data} options={options}/></div>
             <br/>
+          </div>
+
+        </div>
+        <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
+          <div className="container-fluid py-5">
             <h1>CO2-päästöt toimialoittain</h1>
+            <p>(V9) Mittaustulosten kuvaus: <a href='https://ourworldindata.org/emissions-by-sector#co2-emissions-by-sector'>https://ourworldindata.org/emissions-by-sector#co2-emissions-by-sector</a></p>
+            <p>(V9) Datalähde: <a href='https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx'>https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx</a></p>
             <br/>
             <div><Doughnut data={V9Data} options={optionsV9} /> </div>
           </div>
