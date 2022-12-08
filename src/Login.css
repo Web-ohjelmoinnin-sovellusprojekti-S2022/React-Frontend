@@ -1,0 +1,59 @@
+.loginTitle {
+    cursor: default;
+    font-family: Dosis,sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  
+  #loginPassword {
+    border: 0.1rem solid #d3d3d3;
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    padding-bottom: 0.8rem;
+    padding-left: 0.6rem;
+    padding-top: 0.8rem;
+  }
+  
+  
+  #Loginid {
+    border: 0.1rem solid #d3d3d3;
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    margin-bottom: 1.3rem;
+    padding-bottom: 0.8rem;
+    padding-left: 0.6rem;
+    padding-top: 0.8rem;
+  }
+  
+  
+  .myDiv{
+    text-align: center;
+  }
+
+  button{
+    padding: 10px;
+    width: 270px;
+    height: 40px;
+  }
+
+  .loginContent {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+    padding-top: 2rem;
+    background-color: #fff;
+    border: 1px solid grey;
+    border-radius: 1rem;
+    display: block;
+    left: 50%;
+    padding: 2rem;
+    position: fixed;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 100000;
+    opacity: 1;
+  }

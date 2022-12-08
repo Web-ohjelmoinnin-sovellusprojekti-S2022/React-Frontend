@@ -2,9 +2,13 @@ import axios from "axios"
 import React from "react"
 import { useEffect } from "react";
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import setAuthToken from "../components/setAuthToken";
+import '../Login.css';
+
+
+
 export default function Login() {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
@@ -29,39 +33,44 @@ export default function Login() {
                 console.log(error)
             })
     }
-
-
-        return (
-            <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
-                <div className="container-fluid py-5">
-                    <h3>Kirjaudu sisään</h3>
-                    <br></br>
-                    <div className="Login">
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group size="lg" controlId="user">
-                                <Form.Label>Käyttäjänimi</Form.Label>
-                                <Form.Control
-                                    autoFocus
-                                    type="user"
-                                    value={user}
-                                    onChange={(e) => setUser(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group size="lg" controlId="password">
-                                <Form.Label>Salasana</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </Form.Group>
-                            <br></br>
-                            <Button block="true" size="lg" type="submit"  >
-                                Kirjaudu sisään
-                            </Button>
-                        </Form>
-                    </div>
-                </div>
-            </div>
-        )
+    const handlesignup = (e) => {
+        e.preventDefault()
+        navigate('/register')
+        window.location.reload(false);
     }
+    return (
+        <div class="loginContent">
+            <div class="loginTitle">Kirjaudu Sisään</div>
+            <Form onSubmit={handleSubmit} class="loginForm">
+                <Form.Group controlId="user">
+                    <Form.Control
+                        autoFocus
+                        id="Loginid"
+                        placeholder="käyttäjätunnus"
+                        type="user"
+                        value={user}
+                        onChange={(e) => setUser(e.target.value)}
+                    />
+                </Form.Group>
+                <Form.Group controlId="password">
+                    <Form.Control
+                        id="loginPassword"
+                        placeholder="salasana"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+                <br></br>
+                <Button block="true" type="submit" id="loginin">
+                    Kirjaudu sisään
+                </Button>
+            </Form>
+            <div class="myDiv">TAI</div>
+            <Button id="Register" onClick={handlesignup} >
+                Luo Käyttäjä
+            </Button>
+        </div>
+        
+    )
+}

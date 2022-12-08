@@ -54,21 +54,7 @@ const Emission = () => {
       )
    
   }
-  const V9 = () => {
-    axios.get("http://localhost:8080/v8/climateV8countries")
-      .then(response => {
-      
-          setisloading(false)
-      }).catch(error => {
-        alert(error)
-        setisloading(true)
-      }
-
-      )
-   
-  }
-
-
+  
  const V9 = () => {
   let emissions = []
   let sector = []

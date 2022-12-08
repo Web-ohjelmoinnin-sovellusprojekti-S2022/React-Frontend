@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import '../Register.css'
 
 export default function Register(){
     
@@ -35,10 +36,14 @@ export default function Register(){
             })
     }
 
+    const handlesignin = (e) => {
+        e.preventDefault()
+        navigate('/login')
+        window.location(false);
+    }
 
     return (
-        <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
-            <div className="container-fluid py-5">
+        <div class='chart'>
             <div class="main-login-form">
                 <Form onSubmit={handleSubmit}>
                 <h3>Luo käyttäjä</h3>
@@ -56,13 +61,14 @@ export default function Register(){
 						<input type="password" class="form-control" id="password2" name="password2" value={cpassword} onChange={(e) => setCPassword(e.target.value)} placeholder="Vahvista salasana"/>
 					</div>
                 <br></br>
-				<Button block="true" size="lg" type="submit"  >
+				<Button block="true" type="submit"  >
                                 Luo käyttäjä
                 </Button>
                 </Form>
 			</div>
+                <div id="div">TAI</div>
+               <Button id="Login" onClick={handlesignin}>Kirjaudu Sisään</Button>
             </div>
-        </div>
 
     )
 }

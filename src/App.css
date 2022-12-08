@@ -59,14 +59,19 @@ footer{
   background-size: cover;
 }
 
-#login {
-  height: 500px;
-  width: 100%;
-}
-
 #chart {
   border: 1px solid;
   padding: 10px;
   box-shadow: 5px 10px 8px #888888;
 }
+
+
+
+
+
+
+
+
+
+
 
