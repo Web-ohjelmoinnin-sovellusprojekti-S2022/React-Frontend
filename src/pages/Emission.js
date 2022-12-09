@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 const Emission = () => {
-  const [chartData, setChartData] = useState({})
+  const [chartDataV8, setChartDataV8] = useState({})
   const [years, setYears] = useState({})
   const [country, setCountry] = useState([])
   const [isloading, setisloading] = useState(true)
@@ -14,43 +14,36 @@ const Emission = () => {
   let datasets = []
 
   const V8 = () => {
-    let year = []
+    let yearV8 = []
 
     axios.get("http://localhost:8080/v8/climateV8")
       .then(response => {
-        setChartData(response.data)
+        setChartDataV8(response.data)
 
         for (const dataObj of response.data) {
-          year.push(dataObj.year)
+          yearV8.push(dataObj.year)
         }
 
-        setYears(year)
+        setYears(yearV8)
 
 
         setisloading(false)
       }).catch(error => {
         alert(error)
         setisloading(true)
-      }
-
-      )
+      })
 
   }
   const V8Countries = () => {
     axios.get("http://localhost:8080/v8/climateV8countries")
       .then(response => {
-
-
         for (const dataObj of response.data) {
           setCountry(country => [...country, dataObj.country.replace('\r', '')])
         }
-        //setisloading(false)
       }).catch(error => {
         alert(error)
         setisloading(true)
-      }
-
-      )
+      })
 
   }
 
@@ -102,8 +95,8 @@ const Emission = () => {
     const ok = []
     let text = countries[i].toString()
 
-    for (let j = 0; j < chartData.length; j++) {
-      ok.push(chartData[j][text])
+    for (let j = 0; j < chartDataV8.length; j++) {
+      ok.push(chartDataV8[j][text])
     }
     datasets.push({
       label: country[i],
@@ -471,9 +464,9 @@ const Emission = () => {
 
 
   let jaa = years.toString()
-  let year = jaa.split(',')
+  let yearV8Split = jaa.split(',')
   const data = {
-    labels: year,
+    labels: yearV8Split,
     datasets: datasets
   };
 

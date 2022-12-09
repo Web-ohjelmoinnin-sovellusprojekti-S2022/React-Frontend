@@ -15,7 +15,7 @@ const NotAuthNavBar = () => {
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Kaaviot
                         </a>
-                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" id='pasiviheraho'>
                             <li><a className="dropdown-item" href="/globaltemp">Lämpötilakaaviot</a></li>
                             <li><a className="dropdown-item" href="/emission">Päästökaaviot</a></li>
                             <li><a className="dropdown-item" href="/customview">Luo oma näkymä</a></li>
