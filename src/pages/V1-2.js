@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 import { DateTime } from 'luxon';
 import 'chartjs-adapter-luxon';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import { Chart } from "chart.js";
+
+Chart.register(zoomPlugin)
+
 
 function convertToLuxonDate(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.year) }
@@ -45,7 +50,6 @@ function Temperature() {
     const [chartV5, setChartV5] = useState({})
     const [chartV6, setChartV6] = useState({})
     const [chartV7, setChartV7] = useState({})
-    const [chartV10, setChartV10] = useState({})
     const [isloading, setisloading] = useState(true)
     let dataV1 = []
     let year1 = []
@@ -91,7 +95,6 @@ function Temperature() {
                 dataV1.push(convert(dataObj))
             }
 
-            console.log(dataV1)
             setChartData({
                 datasets: [
                     {
@@ -349,7 +352,7 @@ function Temperature() {
             for (const dataObj of responses[1].data) {
                 let converted = dataObj.years_ago / 1000
                 dataObj.years_ago = converted
-                
+
                 dataV7A.push(giveValue(dataObj))
             }
             setChartV7(dataV7A)
@@ -412,7 +415,20 @@ function Temperature() {
                 radius: 0
             }
         },
-        
+        plugins: {
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                }
+            }
+        }
+
     };
     //--------------------------------------------V3---------------------------------------------
     const optionsV3 = {
@@ -442,7 +458,7 @@ function Temperature() {
                 radius: 0
             }
         },
-        
+
         plugins: {
             tooltip: {
                 callbacks: {
@@ -454,24 +470,36 @@ function Temperature() {
                             return context.formattedValue;
                         }
                     },
-                    title: function(context) {
-                        if(context?.[0]?.raw.year === DateTime){
+                    title: function (context) {
+                        if (context?.[0]?.raw.year === DateTime) {
                             return "Year " + context[0].label;
                         }
                         else {
                             return context[0].label;
                         }
-                               
-                      }
-                   
+
+                    }
+
                 }
+                
             },
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                }
+            }
         },
     };
 
     //--------------------------------------------------------------------------------------------------
     // ----------------------------------------------V7-------------------------------------------------
-    
+
     const dataV7 = {
 
         datasets: [
@@ -538,69 +566,71 @@ function Temperature() {
                             return context.formattedValue;
                         }
                     },
-                    title: function(context) {
-                        if(context?.[0]?.raw.years_ago === undefined && context?.[0]?.raw.year1 != null && context?.[0]?.raw.year2 === null){
+                    title: function (context) {
+                        if (context?.[0]?.raw.years_ago === undefined && context?.[0]?.raw.year1 != null && context?.[0]?.raw.year2 === null) {
                             return "Year " + context[0].label;
                         }
                         if (context?.[0]?.raw.years_ago === undefined && context?.[0]?.raw.year2 != null && context?.[0]?.raw.year1 != null) {
                             return "Year " + context[0].label;
                         }
-                        else if(context.length > 0) {
-                          return context[0].raw.years_ago + " years ago";
+                        else if (context.length > 0) {
+                            return context[0].raw.years_ago + " years ago";
                         }
-                               
-                      }
-                   
+
+                    }
+
                 }
             },
-        },
-            scales: {
-                x: {
-                    type: 'linear',
-                    title: {
-                        display: true,
-                        text: 'Tuhannet vuodet ennen nykyhetkeä'
-                    },
-                    reverse: true,
-                },
-                y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                    title: {
-                        display: true,
-                        text: 'CO2'
-                    }
-                },
 
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    grid: {
-                        drawOnChartArea: false,
-                    },
-                    
-
-                    title: {
-                        display: true,
-                        text: '°C'
-                    },
-                },
-            },
             zoom: {
                 zoom: {
-                  wheel: {
-                    enabled: true,
-                  },
-                  mode: "xy",
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'xy',
+                }
+            }
+
+        },
+        scales: {
+            x: {
+                type: 'linear',
+                title: {
+                    display: true,
+                    text: 'Tuhannet vuodet ennen nykyhetkeä'
                 },
-                pan: {
-                  enabled: true,
-                  mode: "xy",
+                reverse: true,
+            },
+            y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                    display: true,
+                    text: 'CO2'
+                }
+            },
+
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false,
                 },
-              },
-        
+
+
+                title: {
+                    display: true,
+                    text: '°C'
+                },
+            },
+        },
+
+
     };
 
     //---------------------------------------------------------------------------------------------------------------------
@@ -614,7 +644,7 @@ function Temperature() {
     else {
         return (
             <>
-                <div id='chart'  className="p-5 mb-4 bg-light rounded-3">
+                <div id='chart' className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
                     <p>(V1) Mittaustulosten kuvaus: <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>https://www.metoffice.gov.uk/hadobs/hadcrut5</a></p>
                     <p>(V1) Datalähde: <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/download.html'>https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/download.html</a></p>
@@ -624,7 +654,7 @@ function Temperature() {
                         <div><Line data={chartData} options={optionsV1} /></div>
                     </div>
                 </div>
-                <div id='chart'  className="p-5 mb-4 bg-light rounded-3">
+                <div id='chart' className="p-5 mb-4 bg-light rounded-3">
                     <h1>Mauna Loan ilmakehän hiilidioksidipitoisuudet 1959-2021 (v3)</h1>
                     <p>(V3) Mittaustulosten kuvaus: <a href='https://gml.noaa.gov/ccgg/about/co2_measurements.html'>https://gml.noaa.gov/ccgg/about/co2_measurements.html</a></p>
                     <p>(V3) Datalähde: <a href='https://gml.noaa.gov/ccgg/trends/data.html'>https://gml.noaa.gov/ccgg/trends/data.html</a></p>
@@ -636,7 +666,7 @@ function Temperature() {
                         <div><Line data={chartV3M} options={optionsV3} /></div>
                     </div>
                 </div>
-                <div id='chart'  className="p-5 mb-4 bg-light rounded-3">
+                <div id='chart' className="p-5 mb-4 bg-light rounded-3">
                     <h1>Ilmakehän hiilidioksidipitoisuudet Vostok asemalla tehtyihin jääkairauksiin perustuen 2342-417160 (v5) </h1>
                     <p>(V5) Mittaustulosten kuvaus: <a href='https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html'>https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html</a></p>
                     <p>(V5) Datalähde: <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2'>https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2</a></p>
@@ -644,7 +674,7 @@ function Temperature() {
                         <div><Line data={chartV5} options={options} /></div>
                     </div>
                 </div>
-                <div id='chart'  className="p-5 mb-4 bg-light rounded-3">
+                <div id='chart' className="p-5 mb-4 bg-light rounded-3">
                     <h1>Hiilidioksidipitoisuudet perustuen yhdistelmätutkimuksella tehtyihin etelämantereen jääkairauksiin (aikajakso 800000 vuotta)(v6) </h1>
                     <p>(V6) Mittaustulosten kuvaus: <a href='https://www.ncei.noaa.gov/access/paleo-search/study/17975'>https://www.ncei.noaa.gov/access/paleo-search/study/17975</a></p>
                     <p>(V6) Datalähde: <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt</a></p>
@@ -652,7 +682,7 @@ function Temperature() {
                         <div><Line data={chartV6} options={options} /></div>
                     </div>
                 </div>
-                <div id='chart'  className="p-5 mb-4 bg-light rounded-3">
+                <div id='chart' className="p-5 mb-4 bg-light rounded-3">
                     <h1>Lämpötilan kehitys maapallolla 2 miljoonan vuoden ajalta (v7) </h1>
                     <p>(V7) Mittaustulosten kuvaus: <a href='https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf'>https://climate.fas.harvard.edu/files/climate/files/snyder_2016.pdf</a></p>
                     <p>(V7) Datalähde: <a href='http://carolynsnyder.com/publications.php '>http://carolynsnyder.com/publications.php </a></p>

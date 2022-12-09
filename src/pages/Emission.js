@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Bar, Chart, Doughnut, Line, Pie } from 'react-chartjs-2';
-import { Chart as ChartJs } from "chart.js/auto";
+import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import axios from 'axios';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import { Chart } from "chart.js";
 
 
 const Emission = () => {
@@ -12,6 +13,8 @@ const Emission = () => {
   const [V9Data, setV9Data] = useState([])
   const [viewData, setViewData] = useState([])
   let datasets = []
+
+  Chart.register(zoomPlugin)
 
   const V8 = () => {
     let yearV8 = []
@@ -134,8 +137,20 @@ const Emission = () => {
           text: 'Maakohtaiset CO2-päästöt '
         }
       }
+    },
+    plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'xy',
+        }
+      }
     }
-
   };
 
   function subSectors(e) {

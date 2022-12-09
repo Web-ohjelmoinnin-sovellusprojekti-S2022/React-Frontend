@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Bar, Line, Pie, Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJs } from "chart.js/auto";
 import axios from 'axios';
 import Temperature from './V1-2';
 import { DateTime } from 'luxon';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import { Chart } from "chart.js";
 
+Chart.register(zoomPlugin)
 
 function CustomView() {
+
+
+
   function convertToLuxonDate1(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.dss_year) }
   }
@@ -40,6 +45,8 @@ function CustomView() {
   function convertYearly(dataObj) {
     return { ...dataObj, anomalyG: dataObj.anomaly_g, anomalyN: dataObj.anomaly_n, anomalyS: dataObj.anomaly_s }
   }
+
+
 
   const [chartData, setChartData] = useState({})
   const [isloading, setisloading] = useState(true)
@@ -1173,6 +1180,19 @@ function CustomView() {
         radius: 0
       }
     },
+    plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'xy',
+        }
+      }
+    }
 
   };
 
@@ -1229,6 +1249,17 @@ function CustomView() {
 
         }
       },
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'xy',
+        }
+      }
     },
   };
 
@@ -1316,6 +1347,18 @@ function CustomView() {
 
         }
       },
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'xy',
+        }
+      }
+
     },
     scales: {
       x: {
@@ -1351,18 +1394,7 @@ function CustomView() {
         },
       },
     },
-    zoom: {
-      zoom: {
-        wheel: {
-          enabled: true,
-        },
-        mode: "xy",
-      },
-      pan: {
-        enabled: true,
-        mode: "xy",
-      },
-    },
+
 
   };
 
@@ -1391,6 +1423,19 @@ function CustomView() {
         title: {
           display: true,
           text: 'Maakohtaiset CO2-päästöt '
+        }
+      }
+    },
+    plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true
+          },
+          mode: 'xy',
         }
       }
     }
@@ -1557,7 +1602,7 @@ function CustomView() {
               </tr>
             </table>
             <form onSubmit={handleClick}>
-              <br/>
+              <br />
               <button>Luo näkymä</button>
             </form>
           </div>
