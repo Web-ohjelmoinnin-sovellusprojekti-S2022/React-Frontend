@@ -10,8 +10,6 @@ Chart.register(zoomPlugin)
 
 function CustomView() {
 
-
-
   function convertToLuxonDate1(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.dss_year) }
   }
@@ -46,8 +44,6 @@ function CustomView() {
     return { ...dataObj, anomalyG: dataObj.anomaly_g, anomalyN: dataObj.anomaly_n, anomalyS: dataObj.anomaly_s }
   }
 
-
-
   const [chartData, setChartData] = useState({})
   const [isloading, setisloading] = useState(true)
   const [createView, setCreateView] = useState(false)
@@ -67,8 +63,15 @@ function CustomView() {
   const [years, setYears] = useState({})
   const [country, setCountry] = useState([])
   const [V9Data, setV9Data] = useState([])
-  let datasets = []
+  const [textV1, setTextV1] = useState("")
+  const [textV3, setTextV3] = useState("")
+  const [textV5, setTextV5] = useState("")
+  const [textV6, setTextV6] = useState("")
+  const [textV7, setTextV7] = useState("")
+  const [textV8, setTextV8] = useState("")
+  const [textV9, setTextV9] = useState("")
 
+  let datasets = []
   let dataV1 = []
   let year1 = []
   let co2_ppm = []
@@ -467,6 +470,49 @@ function CustomView() {
     })
   }
 
+  function checkTextV1(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV1(t)
+  }
+  function checkTextV3(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV3(t)
+  }
+  function checkTextV5(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV5(t)
+  }
+  function checkTextV6(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV6(t)
+  }
+  function checkTextV7(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV7(t)
+  }
+  function checkTextV8(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV8(t)
+  }
+  function checkTextV9(t){
+    if(createView){
+      setCreateView(false)
+    }
+    setTextV9(t)
+  }
+
   const handleChangeV1 = event => {
     if (event.target.checked) {
       setV1(true)
@@ -482,6 +528,7 @@ function CustomView() {
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
     }
+    
 
   }
 
@@ -588,6 +635,14 @@ function CustomView() {
   }
   const handleChangeGridView = event => {
     if (event.target.checked) {
+      setGridView(true)
+    }
+    if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
+      setCreateView(false)
+      setGridView(true)
+    }
+    if (V1 && gridView === false|| V3 && gridView === false || V5 && gridView === false || V6 && gridView === false || V7 && gridView === false || V8 && gridView === false || V9 && gridView === false) {
+      setCreateView(false)
       setGridView(true)
     }
     else {
@@ -1475,6 +1530,7 @@ function CustomView() {
     <p>(V2) Datalähde: <a href='https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt'>https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartData} options={optionsV1} /></div>
+      <p>{textV1}</p>
     </div>
   </div>
 
@@ -1488,6 +1544,7 @@ function CustomView() {
     <p>(V10) Datalähde: <a href='https://www.southampton.ac.uk/~cpd/history.html'>https://www.southampton.ac.uk/~cpd/history.html</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV3M} options={optionsV3} /></div>
+      <p>{textV3}</p>
     </div>
   </div>
 
@@ -1497,6 +1554,7 @@ function CustomView() {
     <p>(V5) Datalähde: <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2'>https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV5} options={options} /></div>
+      <p>{textV5}</p>
     </div>
   </div>
 
@@ -1506,6 +1564,7 @@ function CustomView() {
     <p>(V6) Datalähde: <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV6} options={options} /></div>
+      <p>{textV6}</p>
     </div>
   </div>
 
@@ -1517,6 +1576,7 @@ function CustomView() {
     <p>(V10) Datalähde: <a href='https://www.southampton.ac.uk/~cpd/history.html'>https://www.southampton.ac.uk/~cpd/history.html</a></p>
     <div className="container-fluid py-5">
       <div><Line data={dataV7} options={configV7} /></div>
+      <p>{textV7}</p>
     </div>
   </div>
 
@@ -1527,6 +1587,7 @@ function CustomView() {
       <p>(V8) Datalähde: <a href='https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D'>https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D</a></p>
       <br />
       <div><Line data={data} options={optionsV8} /></div>
+      <p>{textV8}</p>
       <br />
     </div>
   </div>
@@ -1537,7 +1598,9 @@ function CustomView() {
       <p>(V9) Mittaustulosten kuvaus: <a href='https://ourworldindata.org/emissions-by-sector#co2-emissions-by-sector'>https://ourworldindata.org/emissions-by-sector#co2-emissions-by-sector</a></p>
       <p>(V9) Datalähde: <a href='https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx'>https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx</a></p>
       <br />
-      <div><Doughnut data={V9Data} options={optionsV9} /> </div>
+      <div><Doughnut data={V9Data} options={optionsV9} />
+      <p>{textV9}</p>
+       </div>
     </div>
     <form onSubmit={e => mainView(e)}>
       <button>Takaisin</button>
@@ -1564,41 +1627,62 @@ function CustomView() {
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV1} />
                   &nbsp;
-                  <label> V1 ja V2</label></td>
+                  <label> V1 ja V2 </label> </td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV1} onChange={e => checkTextV1(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV3} />
                   &nbsp;
                   <label> V3, V4 ja V10</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV3} onChange={e => checkTextV3(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV5} />
                   &nbsp;
                   <label> V5</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV5} onChange={e => checkTextV5(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV6} />
                   &nbsp;
                   <label> V6</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV6} onChange={e => checkTextV6(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV7} />
                   &nbsp;
                   <label> V7 ja V10</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV7} onChange={e => checkTextV7(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV8} />
                   &nbsp;
                   <label> V8</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV8} onChange={e => checkTextV8(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV9} />
                   &nbsp;
                   <label> V9</label></td>
+                  &nbsp;
+                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV9} onChange={e => checkTextV9(e.target.value)} />
+                  </td>
               </tr>
               <tr>
                 <input type="checkbox" class="form-check-input" onChange={handleChangeGridView} />
-                <label>&nbsp; Muuta näkymää </label>
+                <label>&nbsp; 2 sarakkeen rinnakkaisasettelu</label>
               </tr>
             </table>
             <form onSubmit={handleClick}>
@@ -1616,7 +1700,6 @@ function CustomView() {
           {(V8 && createView) ? <DrawChartV8 /> : null}
           {(V9 && createView) ? <DrawChartV9 /> : null}
         </div>
-
       </>
     )
   }
