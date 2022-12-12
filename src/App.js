@@ -24,7 +24,7 @@ function App() {
   return (
     <> 
     {auth ? <NavBar/> : <NotAuthNavBar/> }
-      <div className='container'>
+      <div>
          
           <Routes>
             <Route path='/' element={<Home />} />

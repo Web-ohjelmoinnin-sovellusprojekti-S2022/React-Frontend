@@ -68,5 +68,11 @@ footer{
   border: 1px solid;
   padding: 10px;
   box-shadow: 5px 10px 8px #888888;
+  width: 100%;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
