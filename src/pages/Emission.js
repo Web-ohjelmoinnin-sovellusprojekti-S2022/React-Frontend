@@ -13,7 +13,7 @@ const Emission = () => {
   const [V9Data, setV9Data] = useState([])
   const [viewData, setViewData] = useState([])
   let datasets = []
-  let V9Data = []
+  //let V9Data = []
 
   Chart.register(zoomPlugin)
 
