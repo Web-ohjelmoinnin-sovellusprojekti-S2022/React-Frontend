@@ -47,13 +47,14 @@
     background-color: #fff;
     border: 1px solid grey;
     border-radius: 1rem;
-    display: block;
-    left: 50%;
+    left: auto;
+    right: auto;
     padding: 2rem;
-    position: fixed;
-    top: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    z-index: 100000;
-    opacity: 1;
+    position: absolute;
   }
+
+
+
+
+
+

@@ -50,6 +50,7 @@ footer{
 
 .dropdown-item {
   text-align: left;
+  position: relative;
 }
 
 #header {
@@ -58,6 +59,7 @@ footer{
   width: 50%;
   background-size: cover;
 }
+
 
 #chart {
   border: 1px solid;

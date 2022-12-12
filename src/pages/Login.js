@@ -39,6 +39,7 @@ export default function Login() {
         window.location.reload(false);
     }
     return (
+  
         <div class="loginContent">
             <div class="loginTitle">Kirjaudu Sisään</div>
             <Form onSubmit={handleSubmit} class="loginForm">
@@ -71,6 +72,6 @@ export default function Login() {
                 Luo Käyttäjä
             </Button>
         </div>
-        
+
     )
 }
