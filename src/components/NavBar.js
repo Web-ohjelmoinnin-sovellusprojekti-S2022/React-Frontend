@@ -18,6 +18,7 @@ const NavBar = () => {
                 <div className="navbar-nav">
                     <Link className="nav-link" to="/about">Tietoa</Link>
                     <Link className="nav-link" to="/logout"onClick={Logout}>Kirjaudu Ulos</Link>
+                    <Link className="nav-link" to="/deleteacc">Poista käyttäjätili</Link>
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             Kaaviot

@@ -13,6 +13,7 @@ const Emission = () => {
   const [V9Data, setV9Data] = useState([])
   const [viewData, setViewData] = useState([])
   let datasets = []
+  let V9Data = []
 
   Chart.register(zoomPlugin)
 
@@ -52,6 +53,7 @@ const Emission = () => {
 
 
 
+
   const V9 = () => {
     let emissions = []
     let sector = []
@@ -79,6 +81,7 @@ const Emission = () => {
       })
 
   }
+
 
   const countries = country.map(element => {
     return element.toLowerCase();
