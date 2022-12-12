@@ -43,7 +43,7 @@ const NavBar = () => {
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a href="/about" class="nav-link">Tietoa</a></li>
-                    <li class="nav-item"><a href="/deletacc" class="nav-link">Poista käyttäjätili</a></li>
+                    <li class="nav-item"><a href="/deleteacc" class="nav-link">Poista käyttäjätili</a></li>
                     <li class="nav-item"><a href="/logout" class="nav-link">Kirjaudu ulos</a></li>
                     <div className="dropdown">
                         <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
