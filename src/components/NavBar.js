@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import Logout from "../pages/Logout";
 
@@ -51,6 +52,19 @@ const NavBar = () => {
                             <li><a className="dropdown-item" href="/globaltemp">Lämpötilakaaviot</a></li>
                             <li><a className="dropdown-item" href="/emission">Päästökaaviot</a></li>
                             <li><a className="dropdown-item" href="/customview">Luo oma näkymä</a></li>
+                        </ul>
+                    </div>
+                    <div className="dropdown">
+                        <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Oma profiili
+                        </a>
+                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" id='pasiviheraho'>
+                            <li><a className="dropdown-item" href="/customviews">Omat näkymät</a></li>
+                            <Form id='buttons'>
+                                <Button block="true" type="submit"  >
+                                    Poista käyttäjä
+                                </Button>
+                            </Form>
                         </ul>
                     </div>
                 </ul>

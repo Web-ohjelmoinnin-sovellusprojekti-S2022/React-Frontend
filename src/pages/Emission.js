@@ -50,6 +50,8 @@ const Emission = () => {
 
   }
 
+ 
+
 
 
   const V9 = () => {
@@ -522,7 +524,6 @@ const Emission = () => {
           <form onSubmit={e => mainView(e)}>
             <button>Takaisin</button>
           </form>
-
         </div>
       </>
     )

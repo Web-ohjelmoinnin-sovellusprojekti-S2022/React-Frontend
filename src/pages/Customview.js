@@ -5,11 +5,23 @@ import Temperature from './V1-2';
 import { DateTime } from 'luxon';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from "chart.js";
+import { Form, Button } from 'react-bootstrap';
+
 
 Chart.register(zoomPlugin)
 
 function CustomView() {
 
+  //Annetaan arvo ihmiskunnan merkkipaaluille, jotta ne näkyvät kaavioissa sopivalla korkeudella
+  function giveValue(dataObj) {
+    return { ...dataObj, value: 1 }
+  }
+  function giveValueHigh(dataObj) {
+    return { ...dataObj, value: 350 }
+  }
+
+  //--------------------------------------------------------------------------------------------
+  //Funktiot kenttien nimien muuttamiseen ja luxondate kännöksiin
   function convertToLuxonDate1(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.dss_year) }
   }
@@ -18,12 +30,6 @@ function CustomView() {
   }
   function convertToLuxonDate3(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.de08_year) }
-  }
-  function giveValue(dataObj) {
-    return { ...dataObj, value: 1 }
-  }
-  function giveValueHigh(dataObj) {
-    return { ...dataObj, value: 350 }
   }
   function convertToLuxonDate(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.year) }
@@ -44,6 +50,7 @@ function CustomView() {
     return { ...dataObj, anomalyG: dataObj.anomaly_g, anomalyN: dataObj.anomaly_n, anomalyS: dataObj.anomaly_s }
   }
 
+  //Tilamuuttujat
   const [chartData, setChartData] = useState({})
   const [isloading, setisloading] = useState(true)
   const [createView, setCreateView] = useState(false)
@@ -71,6 +78,20 @@ function CustomView() {
   const [textV8, setTextV8] = useState("")
   const [textV9, setTextV9] = useState("")
 
+  //Customview -muuttujat
+  const [V1text, setV1text] = useState("")
+  const [V3text, setV3text] = useState("")
+  const [V5text, setV5text] = useState("")
+  const [V6text, setV6text] = useState("")
+  const [V7text, setV7text] = useState("")
+  const [V8text, setV8text] = useState("")
+  const [V9text, setV9text] = useState("")
+  const [gridview, setgridview] = useState(false)
+  const [id, setID] = useState(0)
+  const [owner, setOwner] = useState(localStorage.getItem("token"))
+
+
+  //Ns. apumuuttujat
   let datasets = []
   let dataV1 = []
   let year1 = []
@@ -83,7 +104,7 @@ function CustomView() {
   let emissions = []
   let sector = []
 
-  //V1 ja V2
+  //V1 ja V2 kutsut
   let V1Axios = "http://localhost:8080/v1/climateV1"
   let V1M = "http://localhost:8080/v1/climateV1monthly"
   let V2Data = "http://localhost:8080/v2/climateV2"
@@ -91,7 +112,7 @@ function CustomView() {
   const requestV1M = axios.get(V1M);
   const requestV2 = axios.get(V2Data);
 
-  //V3
+  //V3 kutsut
   let one = "http://localhost:8080/v3/climateV3"
   let two = "http://localhost:8080/v3/climateV3monthly"
   let three = "http://localhost:8080/v4/climateV4"
@@ -99,7 +120,7 @@ function CustomView() {
   const requestTwo = axios.get(two);
   const reuestThree = axios.get(three);
 
-  //V7 ja 10
+  //V7 ja 10 kutsut
   let V7Data = "http://localhost:8080/v7/climateV7"
   let V10 = "http://localhost:8080/v10/climateV10"
   const requestV7 = axios.get(V7Data);
@@ -470,47 +491,47 @@ function CustomView() {
     })
   }
 
-  function checkTextV1(t){
-    if(createView){
+  function checkTextV1(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV1(t)
+    setV1text(t)
   }
-  function checkTextV3(t){
-    if(createView){
+  function checkTextV3(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV3(t)
+    setV3text(t)
   }
-  function checkTextV5(t){
-    if(createView){
+  function checkTextV5(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV5(t)
+    setV5text(t)
   }
-  function checkTextV6(t){
-    if(createView){
+  function checkTextV6(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV6(t)
+    setV6text(t)
   }
-  function checkTextV7(t){
-    if(createView){
+  function checkTextV7(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV7(t)
+    setV7text(t)
   }
-  function checkTextV8(t){
-    if(createView){
+  function checkTextV8(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV8(t)
+    setV8text(t)
   }
-  function checkTextV9(t){
-    if(createView){
+  function checkTextV9(t) {
+    if (createView) {
       setCreateView(false)
     }
-    setTextV9(t)
+    setV9text(t)
   }
 
   const handleChangeV1 = event => {
@@ -528,7 +549,7 @@ function CustomView() {
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
     }
-    
+
 
   }
 
@@ -641,7 +662,7 @@ function CustomView() {
       setCreateView(false)
       setGridView(true)
     }
-    if (V1 && gridView === false|| V3 && gridView === false || V5 && gridView === false || V6 && gridView === false || V7 && gridView === false || V8 && gridView === false || V9 && gridView === false) {
+    if (V1 && gridView === false || V3 && gridView === false || V5 && gridView === false || V6 && gridView === false || V7 && gridView === false || V8 && gridView === false || V9 && gridView === false) {
       setCreateView(false)
       setGridView(true)
     }
@@ -657,6 +678,37 @@ function CustomView() {
     }
   }
 
+  function saveView(e) {
+    e.preventDefault()
+    axios.post("http://localhost:8080/customview/create", {},
+      {
+        params: {
+          owner,
+          V1,
+          V3,
+          V5,
+          V6,
+          V7,
+          V8,
+          V9,
+          V1text,
+          V3text,
+          V5text,
+          V6text,
+          V7text,
+          V8text,
+          V9text,
+          gridView
+        }
+      }
+    ).then(response => {
+      console.log(response)
+    }).catch(error => {
+      alert("Käyttäjänimi on jo olemassa")
+      console.log(error)
+    })
+  }
+
   function subSectors(e) {
     let subEmissions = []
     let subSectors = []
@@ -877,228 +929,7 @@ function CustomView() {
         })
     }
   }
-  function subSectors(e) {
-    let subEmissions = []
-    let subSectors = []
-    if (e.chart.tooltip.dataPoints?.[0]?.label === "Energy") {
-      axios.get("http://localhost:8080/v9/climateV9subSector")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Transport" || dataObj.sector === "Energy in buildings (elec and heat)" || dataObj.sector === "Energy in industry"
-              || dataObj.sector === "Energy in Agri & Fishing" || dataObj.sector === "Unallocated fuel combustion" || dataObj.sector === "Fugitive emissions from energy") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(105, 205, 10)',
-                'rgb(105, 25, 100)',
-                'rgb(155, 250, 10)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-    } else if (e.chart.tooltip.dataPoints?.[0]?.label === "Industrial processes") {
-      axios.get("http://localhost:8080/v9/climateV9subSector")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Cement" || dataObj.sector === "Chemical & petrochemical (industrial)") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-    } else if (e.chart.tooltip.dataPoints?.[0]?.label === "Agriculture. Forestry & Land Use (AFOLU)") {
-      axios.get("http://localhost:8080/v9/climateV9subSector")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Livestock & Manure" || dataObj.sector === "Rice Cultivation" || dataObj.sector === "Agricultural Soils"
-              || dataObj.sector === "Crop Burning" || dataObj.sector === "Forest Land" || dataObj.sector === "Cropland" || dataObj.sector === "Grassland") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(105, 205, 10)',
-                'rgb(105, 25, 100)',
-                'rgb(155, 250, 10)',
-                'rgb(155, 250, 200)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-    } else if (e.chart.tooltip.dataPoints?.[0]?.label === "Waste") {
-      axios.get("http://localhost:8080/v9/climateV9subSector")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Landfills" || dataObj.sector === "Wastewater") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 205, 86)',
-                'rgb(255, 205, 200)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-    } else if (e.chart.tooltip.dataPoints?.[0]?.label === "Transport") {
-      axios.get("http://localhost:8080/v9/climateV9subSectorDetail")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Road" || dataObj.sector === "Aviation" || dataObj.sector === "Rail"
-              || dataObj.sector === "Pipeline" || dataObj.sector === "Ship") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(105, 205, 10)',
-                'rgb(105, 25, 100)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-    } else if (e.chart.tooltip.dataPoints?.[0]?.label === "Energy in buildings (elec and heat)") {
-      axios.get("http://localhost:8080/v9/climateV9subSectorDetail")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Residential" || dataObj.sector === "Commercial") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 205, 200)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-
-
-    }
-    else if (e.chart.tooltip.dataPoints?.[0]?.label === "Energy in industry") {
-      axios.get("http://localhost:8080/v9/climateV9subSectorDetail")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Iron & Steel" || dataObj.sector === "Non-ferous metals" || dataObj.sector === "Machinery" || dataObj.sector === "Food and tobacco"
-              || dataObj.sector === "Paper. pulp & printing" || dataObj.sector === "Chemical & petrochemical (energy)" || dataObj.sector === "Other industry") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(105, 205, 10)',
-                'rgb(105, 25, 100)',
-                'rgb(155, 250, 10)',
-                'rgb(155, 250, 200)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-    }
-    else if (e.chart.tooltip.dataPoints?.[0]?.label === "Fugitive emissions from energy") {
-      axios.get("http://localhost:8080/v9/climateV9subSectorDetail")
-        .then(response => {
-          for (const dataObj of response.data) {
-            if (dataObj.sector === "Coal" || dataObj.sector === "Oil & Natural Gas") {
-              subSectors.push(dataObj.sector)
-              subEmissions.push(dataObj.emissions)
-            }
-
-          }
-          setV9Data({
-            labels: subSectors,
-            datasets: [{
-              data: subEmissions,
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)',
-                'rgb(255, 205, 200)'
-              ],
-              hoverOffset: 20
-            }]
-          })
-          setisloading(false)
-        })
-    }
-  }
-
+  
   function mainView(e) {
     e.preventDefault();
     let subEmissions = []
@@ -1530,7 +1361,7 @@ function CustomView() {
     <p>(V2) Datalähde: <a href='https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt'>https://www.ncei.noaa.gov/pub/data/paleo/contributions_by_author/moberg2005/nhtemp-moberg2005.txt</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartData} options={optionsV1} /></div>
-      <p>{textV1}</p>
+      <p>{V1text}</p>
     </div>
   </div>
 
@@ -1544,7 +1375,7 @@ function CustomView() {
     <p>(V10) Datalähde: <a href='https://www.southampton.ac.uk/~cpd/history.html'>https://www.southampton.ac.uk/~cpd/history.html</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV3M} options={optionsV3} /></div>
-      <p>{textV3}</p>
+      <p>{V3text}</p>
     </div>
   </div>
 
@@ -1554,7 +1385,7 @@ function CustomView() {
     <p>(V5) Datalähde: <a href='https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2'>https://cdiac.ess-dive.lbl.gov/ftp/trends/co2/vostok.icecore.co2</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV5} options={options} /></div>
-      <p>{textV5}</p>
+      <p>{V5text}</p>
     </div>
   </div>
 
@@ -1564,7 +1395,7 @@ function CustomView() {
     <p>(V6) Datalähde: <a href='https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt'>https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt</a></p>
     <div className="container-fluid py-5">
       <div><Line data={chartV6} options={options} /></div>
-      <p>{textV6}</p>
+      <p>{V6text}</p>
     </div>
   </div>
 
@@ -1576,7 +1407,7 @@ function CustomView() {
     <p>(V10) Datalähde: <a href='https://www.southampton.ac.uk/~cpd/history.html'>https://www.southampton.ac.uk/~cpd/history.html</a></p>
     <div className="container-fluid py-5">
       <div><Line data={dataV7} options={configV7} /></div>
-      <p>{textV7}</p>
+      <p>{V7text}</p>
     </div>
   </div>
 
@@ -1587,7 +1418,7 @@ function CustomView() {
       <p>(V8) Datalähde: <a href='https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D'>https://data.icos-cp.eu/licence_accept?ids=%5B%22lApekzcmd4DRC34oGXQqOxbJ%22%5D</a></p>
       <br />
       <div><Line data={data} options={optionsV8} /></div>
-      <p>{textV8}</p>
+      <p>{V8text}</p>
       <br />
     </div>
   </div>
@@ -1599,11 +1430,13 @@ function CustomView() {
       <p>(V9) Datalähde: <a href='https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx'>https://ourworldindata.org/uploads/2020/09/Global-GHG-Emissions-by-sector-based-on-WRI-2020.xlsx</a></p>
       <br />
       <div><Doughnut data={V9Data} options={optionsV9} />
-      <p>{textV9}</p>
-       </div>
+        <p>{V9text}</p>
+      </div>
     </div>
     <form onSubmit={e => mainView(e)}>
-      <button>Takaisin</button>
+      <Button block="true" type="submit"  >
+        Takaisin
+      </Button>
     </form>
   </div>
 
@@ -1628,67 +1461,73 @@ function CustomView() {
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV1} />
                   &nbsp;
                   <label> V1 ja V2 </label> </td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV1} onChange={e => checkTextV1(e.target.value)} />
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V1text} onChange={e => checkTextV1(e.target.value)} />
                 </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV3} />
                   &nbsp;
                   <label> V3, V4 ja V10</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV3} onChange={e => checkTextV3(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V3text} onChange={e => checkTextV3(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV5} />
                   &nbsp;
                   <label> V5</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV5} onChange={e => checkTextV5(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V5text} onChange={e => checkTextV5(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV6} />
                   &nbsp;
                   <label> V6</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV6} onChange={e => checkTextV6(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V6text} onChange={e => checkTextV6(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV7} />
                   &nbsp;
                   <label> V7 ja V10</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV7} onChange={e => checkTextV7(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V7text} onChange={e => checkTextV7(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV8} />
                   &nbsp;
                   <label> V8</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV8} onChange={e => checkTextV8(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V8text} onChange={e => checkTextV8(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input" onChange={handleChangeV9} />
                   &nbsp;
                   <label> V9</label></td>
-                  &nbsp;
-                  <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={textV9} onChange={e => checkTextV9(e.target.value)} />
-                  </td>
+                &nbsp;
+                <td><input type="text" id='inputs' placeholder='Kuvausteksti' value={V9text} onChange={e => checkTextV9(e.target.value)} />
+                </td>
               </tr>
               <tr>
                 <input type="checkbox" class="form-check-input" onChange={handleChangeGridView} />
                 <label>&nbsp; 2 sarakkeen rinnakkaisasettelu</label>
               </tr>
             </table>
-            <form onSubmit={handleClick}>
-              <br />
-              <button>Luo näkymä</button>
-            </form>
+            <Form id='buttons' onSubmit={handleClick}>
+              <Button block="true" type="submit"  >
+                Luo näkymä
+              </Button>
+            </Form>
+            <Form id='buttons' onSubmit={saveView}>
+              <Button block="true" type="submit"  >
+                Tallenna näkymä
+              </Button>
+            </Form>
           </div>
         </div>
         <div className="container-fluid py-5" id={gridView ? 'grid' : null}>

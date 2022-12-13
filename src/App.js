@@ -7,6 +7,7 @@ import Temperature from './pages/V1-2';
 import Menu from './components/Menu';
 import Emission from './pages/Emission';
 import Customview from './pages/Customview';
+import Customviews from './pages/Customviews';
 import { Routes, Route, Navigate, Redirect, Router } from 'react-router-dom';
 import Logout from './pages/Logout';
 import Register from './pages/Register';
@@ -33,6 +34,7 @@ function App() {
             <Route path='/emission' element={<Emission />} />
             <Route path='/login' element={<Login />} />
             <Route path='/customview' element={<Customview />} />
+            <Route path='/customviews' element={<Customviews />} />
             <Route path='/logout' element={<Logout />}/>
             <Route path='/register' element={<Register />} />
           </Routes>

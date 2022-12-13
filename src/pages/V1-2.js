@@ -58,6 +58,7 @@ function Temperature() {
     let ppmv = []
     let dataV3 = []
     let dataV7A = []
+    let V1Years = []
 
     //V1 ja 2
     let V1Axios = "http://localhost:8080/v1/climateV1"
@@ -87,12 +88,15 @@ function Temperature() {
         axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
             for (const dataObj of responses[0].data) {
                 dataV1.push(convertYearly(dataObj))
+                V1Years.push(dataObj.year)
             }
             for (const dataObj of responses[1].data) {
                 dataV1.push(convertM(dataObj))
+                V1Years.push(dataObj.year)
             }
             for (const dataObj of responses[2].data) {
                 dataV1.push(convert(dataObj))
+                V1Years.push(dataObj.year)
             }
 
             setChartData({
