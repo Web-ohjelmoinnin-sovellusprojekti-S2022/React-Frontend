@@ -47,10 +47,13 @@
     background-color: #fff;
     border: 1px solid grey;
     border-radius: 1rem;
-    left: auto;
-    right: auto;
+    text-align: center;
     padding: 2rem;
-    position: absolute;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    width: fit-content;
   }
 
 
