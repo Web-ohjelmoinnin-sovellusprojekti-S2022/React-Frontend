@@ -3,6 +3,7 @@ import { Bar, Doughnut, Line, Pie } from 'react-chartjs-2';
 import axios from 'axios';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from "chart.js";
+import { Button } from 'react-bootstrap';
 
 
 const Emission = () => {
@@ -522,8 +523,10 @@ const Emission = () => {
             <div><Doughnut data={V9Data} options={optionsV9} /> </div>
           </div>
           <form onSubmit={e => mainView(e)}>
-            <button>Takaisin</button>
-          </form>
+            <Button block="true" type="submit"  >
+                Takaisin
+            </Button>
+        </form>
         </div>
       </>
     )

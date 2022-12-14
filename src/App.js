@@ -11,6 +11,7 @@ import Customviews from './pages/Customviews';
 import { Routes, Route, Navigate, Redirect, Router } from 'react-router-dom';
 import Logout from './pages/Logout';
 import Register from './pages/Register';
+import DeleteAccount from './pages/DeleteAccount';
 import NavBar from './components/NavBar';
 import NotAuthNavBar from './components/NotAuthNavBar';
 import useAuth from './components/useAuth';
@@ -37,6 +38,7 @@ function App() {
             <Route path='/customviews' element={<Customviews />} />
             <Route path='/logout' element={<Logout />}/>
             <Route path='/register' element={<Register />} />
+            <Route path='/deleteuser' element={<DeleteAccount />} />
           </Routes>
       </div>
     </>

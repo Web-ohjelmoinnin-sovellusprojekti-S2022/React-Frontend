@@ -40,9 +40,9 @@ export default function Login() {
     }
     return (
   
-        <div class="loginContent">
-            <div class="loginTitle">Kirjaudu Sisään</div>
-            <Form onSubmit={handleSubmit} class="loginForm">
+        <div className="loginContent">
+            <div className="loginTitle">Kirjaudu Sisään</div>
+            <Form onSubmit={handleSubmit} className="loginForm">
                 <Form.Group controlId="user">
                     <Form.Control
                         autoFocus
@@ -67,7 +67,7 @@ export default function Login() {
                     Kirjaudu sisään
                 </Button>
             </Form>
-            <div class="myDiv">TAI</div>
+            <div className="myDiv">TAI</div>
             <Button id="Register" onClick={handlesignup} >
                 Luo Käyttäjä
             </Button>

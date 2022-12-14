@@ -87,6 +87,7 @@ function CustomView() {
   const [V8text, setV8text] = useState("")
   const [V9text, setV9text] = useState("")
   const [gridview, setgridview] = useState(false)
+  const [showSaveButton, setShowSaveButton] = useState(false)
   const [id, setID] = useState(0)
   const [owner, setOwner] = useState(localStorage.getItem("token"))
 
@@ -126,6 +127,7 @@ function CustomView() {
   const requestV7 = axios.get(V7Data);
   const requestV10 = axios.get(V10);
 
+  //V1 ja 2 kutsut
   const Chart = () => {
 
     axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
@@ -138,6 +140,7 @@ function CustomView() {
       for (const dataObj of responses[2].data) {
         dataV1.push(convert(dataObj))
       }
+     //Asetetaan data kaaviolle
       setChartData({
         datasets: [
           {
@@ -544,10 +547,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV1(true)
       setCreateView(false)
+      setShowSaveButton(false)
     }
 
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
 
@@ -563,9 +569,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV3(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -580,9 +590,13 @@ function CustomView() {
     if (event.target.checked && V1 && createView) {
       setV5(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -597,9 +611,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV6(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -614,9 +632,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV7(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -631,9 +653,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV8(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -648,9 +674,13 @@ function CustomView() {
     if (event.target.checked && createView) {
       setV9(true)
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
     }
 
   }
@@ -660,14 +690,20 @@ function CustomView() {
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
+      setShowSaveButton(false)
+
       setGridView(true)
     }
     if (V1 && gridView === false || V3 && gridView === false || V5 && gridView === false || V6 && gridView === false || V7 && gridView === false || V8 && gridView === false || V9 && gridView === false) {
       setCreateView(false)
+      setShowSaveButton(false)
+
       setGridView(true)
     }
     else {
       setGridView(false)
+      setShowSaveButton(false)
+
     }
   }
 
@@ -675,6 +711,7 @@ function CustomView() {
     e.preventDefault()
     if (V1 || V3 || V5 || V6 || V7 || V8 || V9) {
       setCreateView(true)
+      setShowSaveButton(true)
     }
   }
 
@@ -704,7 +741,7 @@ function CustomView() {
     ).then(response => {
       console.log(response)
     }).catch(error => {
-      alert("Käyttäjänimi on jo olemassa")
+      alert("Tallennus epäonnistui")
       console.log(error)
     })
   }
@@ -929,7 +966,7 @@ function CustomView() {
         })
     }
   }
-  
+
   function mainView(e) {
     e.preventDefault();
     let subEmissions = []
@@ -1440,6 +1477,12 @@ function CustomView() {
     </form>
   </div>
 
+  const ShowSaveButton = () => <Form id='buttons' onSubmit={saveView}>
+    <Button block="true" type="submit"  >
+      Tallenna näkymä
+    </Button>
+  </Form>
+
   if (isloading === true) {
     return (
       <p>Loading</p>
@@ -1450,7 +1493,7 @@ function CustomView() {
     return (
       <>
         <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
-          <div className="container-fluid py-5" class="form-check form-switch">
+          <div  className="form-check form-switch container-fluid py-5">
             <table>
               <tr>
                 <td>
@@ -1458,7 +1501,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV1} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV1} />
                   &nbsp;
                   <label> V1 ja V2 </label> </td>
                 &nbsp;
@@ -1466,7 +1509,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV3} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV3} />
                   &nbsp;
                   <label> V3, V4 ja V10</label></td>
                 &nbsp;
@@ -1474,7 +1517,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV5} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV5} />
                   &nbsp;
                   <label> V5</label></td>
                 &nbsp;
@@ -1482,7 +1525,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV6} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV6} />
                   &nbsp;
                   <label> V6</label></td>
                 &nbsp;
@@ -1490,7 +1533,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV7} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV7} />
                   &nbsp;
                   <label> V7 ja V10</label></td>
                 &nbsp;
@@ -1498,7 +1541,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV8} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV8} />
                   &nbsp;
                   <label> V8</label></td>
                 &nbsp;
@@ -1506,7 +1549,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <td><input type="checkbox" class="form-check-input" onChange={handleChangeV9} />
+                <td><input type="checkbox" className="form-check-input" onChange={handleChangeV9} />
                   &nbsp;
                   <label> V9</label></td>
                 &nbsp;
@@ -1514,7 +1557,7 @@ function CustomView() {
                 </td>
               </tr>
               <tr>
-                <input type="checkbox" class="form-check-input" onChange={handleChangeGridView} />
+                <input type="checkbox" className="form-check-input" onChange={handleChangeGridView} />
                 <label>&nbsp; 2 sarakkeen rinnakkaisasettelu</label>
               </tr>
             </table>
@@ -1523,11 +1566,7 @@ function CustomView() {
                 Luo näkymä
               </Button>
             </Form>
-            <Form id='buttons' onSubmit={saveView}>
-              <Button block="true" type="submit"  >
-                Tallenna näkymä
-              </Button>
-            </Form>
+            {(showSaveButton) ? <ShowSaveButton /> : null}
           </div>
         </div>
         <div className="container-fluid py-5" id={gridView ? 'grid' : null}>

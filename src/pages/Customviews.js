@@ -75,6 +75,9 @@ function Customviews() {
     const [years, setYears] = useState({})
     const [country, setCountry] = useState([])
     const [V9Data, setV9Data] = useState([])
+    const [showDelete, setShowDelete] = useState(false)
+    const [id, setId] = useState(0)
+
 
     const [views, setViews] = useState([])
 
@@ -151,6 +154,21 @@ function Customviews() {
                 setV7text(response.data[number].v7text)
                 setV8text(response.data[number].v8text)
                 setV9text(response.data[number].v9text)
+                setId(response.data[number].id)
+
+                setShowDelete(true)
+                setisloading(false)
+            }).catch(error => {
+                alert(error)
+                setisloading(true)
+            })
+    }
+
+    function deleteView(e, id) {
+        e.preventDefault()
+        axios.post("http://localhost:8080/customview/delete?id=" + id)
+            .then(response => {
+                window.location.reload(false)
 
                 setisloading(false)
             }).catch(error => {
@@ -159,11 +177,6 @@ function Customviews() {
             })
     }
 
-    const myButtonList = (response) => <div>
-        {response.map(item => (
-            <button key={item}>{item}</button>
-        ))}
-    </div>
 
 
 
@@ -1292,6 +1305,12 @@ function Customviews() {
         </form>
     </div>
 
+    const DeleteView = () =>  <form onSubmit={e => deleteView(e, id)}>
+            <Button block="true" type="submit"  >
+                Poista näkymä
+            </Button>
+        </form>
+
 
     if (isloading) {
         return (
@@ -1306,6 +1325,7 @@ function Customviews() {
             <>
                 <div className="container-fluid py-5">
                     {views.map(CreateButtons, this)}
+                    {showDelete ? <DeleteView /> : null}
                 </div>
                 <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
                     {V1 ? <DrawChartV1 /> : null}

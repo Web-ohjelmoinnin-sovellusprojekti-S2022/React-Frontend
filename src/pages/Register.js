@@ -43,22 +43,22 @@ export default function Register(){
     }
 
     return (
-        <div class='chart'>
-            <div class="main-login-form">
+        <div className='chart'>
+            <div className="main-login-form">
                 <Form onSubmit={handleSubmit}>
                 <h3>Luo käyttäjä</h3>
-					<div class="form-group">
-						<label for="lg_username" class="sr-only">käyttäjätunnus </label>
-						<input type="text" class="form-control" id="username" value={user} onChange={(e) => setUser(e.target.value)} name="username" placeholder="Käyttäjätunnus "/>
+					<div className="form-group">
+						<label for="lg_username" className="sr-only">käyttäjätunnus </label>
+						<input type="text" className="form-control" id="username" value={user} onChange={(e) => setUser(e.target.value)} name="username" placeholder="Käyttäjätunnus "/>
 					</div>
-					<div class="form-group">
-						<label for="lg_password" class="sr-only">Salasana</label>
-						<input type="password" class="form-control" value={password} onChange={(e) => setPassword(e.target.value)} id="password1" name="password1" placeholder="Salasana"/>
+					<div className="form-group">
+						<label for="lg_password" className="sr-only">Salasana</label>
+						<input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} id="password1" name="password1" placeholder="Salasana"/>
 					</div>
 
-                    <div class="form-group">
-						<label for="lg_password" class="sr-only">Vahvista salasana</label>
-						<input type="password" class="form-control" id="password2" name="password2" value={cpassword} onChange={(e) => setCPassword(e.target.value)} placeholder="Vahvista salasana"/>
+                    <div className="form-group">
+						<label for="lg_password" className="sr-only">Vahvista salasana</label>
+						<input type="password" className="form-control" id="password2" name="password2" value={cpassword} onChange={(e) => setCPassword(e.target.value)} placeholder="Vahvista salasana"/>
 					</div>
                 <br></br>
 				<Button block="true" type="submit"  >
