@@ -13,6 +13,9 @@ export default function Login() {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate()
+
+    // funktio, joka tarkistaa, että löytyykö käyttäjänimellä ja salasanalla tokenia backendistä.
+    // Jos token löytyy, funktio tallentaa tokenin LocalStorageen ja kirjaa käyttäjän sisään.
     const handleSubmit = (e) => {
         e.preventDefault()
         axios.post("http://localhost:8080/login", {},

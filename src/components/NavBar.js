@@ -6,7 +6,7 @@ import Logout from "../pages/Logout";
 
 
 
-
+// Sivu palauttaa tämän navbarin, jos käyttäjä on kirjautunut sisään.
 const NavBar = () => {
     return (
         <nav className="navbar navbar-dark bg-dark navbar-expand-md">

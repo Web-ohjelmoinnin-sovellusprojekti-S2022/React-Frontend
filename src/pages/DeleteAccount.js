@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-
+//Funktio tarkistaa, että löytyykö tokenia, jonka jälkeen kysyy käyttäjältä että haluaako poistaa käyttäjän.
+//Poistaa myös käyttäjän tekemät näkymät.
 const DeleteAccount = () => {
   const navigate = useNavigate()
   const token = localStorage.getItem("token")

@@ -2,6 +2,8 @@ import { useEffect } from "react"
 import { useState } from "react"
 import setAuthToken from "./setAuthToken"
 
+
+// Funktio, joka tarkistaa että löytyykö tokenia.
 const useAuth = () => {
     const [auth, setAuth] = useState(null)
 

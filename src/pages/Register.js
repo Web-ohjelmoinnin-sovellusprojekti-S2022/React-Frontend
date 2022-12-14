@@ -13,6 +13,8 @@ export default function Register(){
     const [cpassword, setCPassword] = useState("");
     const navigate = useNavigate()
 
+    // funktio, joka luo käyttäjän backendiin. Tarkistaa myös, että löytyykö käyttäjänimeä ennestään.
+    // Tarkistaa myös, että salasanat täsmää, ja ettei salasana ole tyhjä.
     const handleSubmit = (e) => {
         if(password != cpassword){
             alert("Salasanat eivät täsmää")
