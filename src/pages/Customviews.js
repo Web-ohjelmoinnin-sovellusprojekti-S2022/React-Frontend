@@ -52,6 +52,9 @@ function Customviews() {
         return { ...dataObj, anomalyG: dataObj.anomaly_g, anomalyN: dataObj.anomaly_n, anomalyS: dataObj.anomaly_s }
     }
 
+    function giveChartNumber(dataObj, number) {
+        return { ...dataObj, value: number }
+    }
     //Tilamuuttujat
     const [chartData, setChartData] = useState({})
     const [isloading, setisloading] = useState(true)
@@ -72,6 +75,9 @@ function Customviews() {
     const [years, setYears] = useState({})
     const [country, setCountry] = useState([])
     const [V9Data, setV9Data] = useState([])
+
+    const [views, setViews] = useState([])
+
 
     const [V1text, setV1text] = useState("")
     const [V3text, setV3text] = useState("")
@@ -116,13 +122,12 @@ function Customviews() {
     const requestV7 = axios.get(V7Data);
     const requestV10 = axios.get(V10);
 
-    function CreateButtons() {
+    function CreateButtons(value) {
+        console.log(value)
         return (
-            <div id='chart' className="p-5 mb-4 bg-light rounded-3">
-                <div className="container-fluid py-5">
-                    <p>{V1text}</p>
-                </div>
-            </div>
+            <Button block="true" type="submit" value={value.value} onClick={e => drawView(e, e.target.value)} >
+                Näkymä {value.value + 1}
+            </Button>
         )
 
     }
@@ -155,41 +160,27 @@ function Customviews() {
     }
 
     const myButtonList = (response) => <div>
-                {response.map(item => (
-                    <button key={item}>{item}</button>
-                ))}
-            </div>
-        
-    
+        {response.map(item => (
+            <button key={item}>{item}</button>
+        ))}
+    </div>
+
+
 
     const getViews = () => {
+        let viewData = []
+        let arvo = 0
         axios.get("http://localhost:8080/customview/owner?owner=" + localStorage.getItem("token"))
             .then(response => {
-                myButtonList(response.data)
-                /* for (const dataObj of response.data) {
-                     setV1(dataObj.v1)
-                     setV3(dataObj.v3)
-                     setV5(dataObj.v5)
-                     setV6(dataObj.v6)
-                     setV7(dataObj.v7)
-                     setV8(dataObj.v8)
-                     setV9(dataObj.v9)
-                     setGridView(dataObj.gridview)
-                     setV1text(dataObj.v1text)
-                     setV3text(dataObj.v3text)
-                     setV5text(dataObj.v5text)
-                     setV6text(dataObj.v6text)
-                     setV7text(dataObj.v7text)
-                     setV8text(dataObj.v8text)
-                     setV9text(dataObj.v9text)
- 
-                 }*/
-                 for (let i = 0; i < response.data.length; i++) {
-                  
-                    
-                 }
 
-                console.log(response.data)
+
+                for (const dataObj of response.data) {
+
+                    viewData.push(giveChartNumber(dataObj, arvo))
+                    arvo++
+                }
+                setViews(viewData)
+
                 setisloading(false)
             }).catch(error => {
                 alert(error)
@@ -571,7 +562,6 @@ function Customviews() {
         let subSectors = []
         let emissions = []
         let sector = []
-        console.log(V9Data.labels[0])
 
         if (V9Data.labels[0] != "Transport" && V9Data.labels[0] != "Livestock & Manure" && V9Data.labels[0] != "Landfills" && V9Data.labels[0] != "Cement") {
             axios.get("http://localhost:8080/v9/climateV9subSector")
@@ -879,7 +869,6 @@ function Customviews() {
         getViews()
     }, [])
 
-    console.log(V1)
 
     const options = {
         responsive: true,
@@ -1315,13 +1304,10 @@ function Customviews() {
     else {
         return (
             <>
+                <div className="container-fluid py-5">
+                    {views.map(CreateButtons, this)}
+                </div>
                 <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
-                    {<myButtonList />}
-                    <form>
-                        <Button block="true" type="submit" value={0} onClick={e => drawView(e,e.target.value)} >
-                            Näkymä 1
-                        </Button>
-                    </form>
                     {V1 ? <DrawChartV1 /> : null}
                     {V3 ? <DrawChartV3 /> : null}
                     {V5 ? <DrawChartV5 /> : null}
@@ -1329,7 +1315,7 @@ function Customviews() {
                     {V7 ? <DrawChartV7 /> : null}
                     {V8 ? <DrawChartV8 /> : null}
                     {V9 ? <DrawChartV9 /> : null}
-                   
+
                 </div>
             </>
         )
