@@ -21,9 +21,10 @@ const DeleteAccount = () => {
         }
       }
     ).then(response => {
+      alert("Käyttäjän poistaminen onnistui!")
       console.log(response)
     }).catch(error => {
-      alert("Näkymien poisto epäonnistui")
+      alert("Käyttäjän poistaminen epäonnistui")
       console.log(error)
     })
       localStorage.removeItem("token")

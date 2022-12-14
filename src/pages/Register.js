@@ -29,7 +29,7 @@ export default function Register(){
                 }
             }).then(response => {
                 console.log(response)
-                navigate('/')
+                navigate('/login')
             }).catch(error => {
                 alert("Käyttäjänimi on jo olemassa")
                 console.log(error)

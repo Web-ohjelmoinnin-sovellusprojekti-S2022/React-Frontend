@@ -6,11 +6,12 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from "chart.js";
 import { Form, Button } from 'react-bootstrap';
 import { Line, Doughnut } from 'react-chartjs-2';
+import { useSearchParams } from "react-router-dom";
 
 
 
 
-function Customviews() {
+function CustomViewByID() {
 
     Chart.register(zoomPlugin)
 
@@ -75,12 +76,7 @@ function Customviews() {
     const [years, setYears] = useState({})
     const [country, setCountry] = useState([])
     const [V9Data, setV9Data] = useState([])
-    const [showDelete, setShowDelete] = useState(false)
     const [id, setId] = useState(0)
-    const [linkID, setLinkID] = useState(0)
-
-
-    const [views, setViews] = useState([])
 
 
     const [V1text, setV1text] = useState("")
@@ -126,88 +122,43 @@ function Customviews() {
     const requestV7 = axios.get(V7Data);
     const requestV10 = axios.get(V10);
 
-    function CreateButtons(value) {
-        console.log(value)
-        return (
-            <Button block="true" type="submit" value={value.value} onClick={e => drawView(e, e.target.value)} >
-                Näkymä {value.value + 1}
-            </Button>
-        )
 
-    }
+    const [searchParams, setSearchParams] = useSearchParams();
+    searchParams.get("id")
+    
+    console.log(searchParams)
+    
 
-    function drawView(e, number) {
-        e.preventDefault()
-        axios.get("http://localhost:8080/customview/owner?owner=" + localStorage.getItem("token"))
+    function drawView() {
+        if(searchParams != undefined){
+            axios.get("http://localhost:8080/customview/id?" + searchParams)
             .then(response => {
-                console.log("moiu")
-                console.log(response.data[number].id)
-                setLinkID(response.data[number].id)
-                setV1(response.data[number].v1)
-                setV3(response.data[number].v3)
-                setV5(response.data[number].v5)
-                setV6(response.data[number].v6)
-                setV7(response.data[number].v7)
-                setV8(response.data[number].v8)
-                setV9(response.data[number].v9)
-                setGridView(response.data[number].gridview)
-                setV1text(response.data[number].v1text)
-                setV3text(response.data[number].v3text)
-                setV5text(response.data[number].v5text)
-                setV6text(response.data[number].v6text)
-                setV7text(response.data[number].v7text)
-                setV8text(response.data[number].v8text)
-                setV9text(response.data[number].v9text)
-                setId(response.data[number].id)
-
-                setShowDelete(true)
-                setisloading(false)
-            }).catch(error => {
-                alert(error)
-                setisloading(true)
-            })
-
-          
-    }
-
-
-
-    function deleteView(e, id) {
-        e.preventDefault()
-        axios.post("http://localhost:8080/customview/delete?id=" + id)
-            .then(response => {
-                window.location.reload(false)
+                setV1(response.data.v1)
+                setV3(response.data.v3)
+                setV5(response.data.v5)
+                setV6(response.data.v6)
+                setV7(response.data.v7)
+                setV8(response.data.v8)
+                setV9(response.data.v9)
+                setGridView(response.data.gridview)
+                setV1text(response.data.v1text)
+                setV3text(response.data.v3text)
+                setV5text(response.data.v5text)
+                setV6text(response.data.v6text)
+                setV7text(response.data.v7text)
+                setV8text(response.data.v8text)
+                setV9text(response.data.v9text)
+                setId(response.data.id)
 
                 setisloading(false)
             }).catch(error => {
                 alert(error)
                 setisloading(true)
             })
+        }
+        
     }
 
-
-
-
-    const getViews = () => {
-        let viewData = []
-        let arvo = 0
-        axios.get("http://localhost:8080/customview/owner?owner=" + localStorage.getItem("token"))
-            .then(response => {
-
-
-                for (const dataObj of response.data) {
-
-                    viewData.push(giveChartNumber(dataObj, arvo))
-                    arvo++
-                }
-                setViews(viewData)
-
-                setisloading(false)
-            }).catch(error => {
-                alert(error)
-                setisloading(true)
-            })
-    }
 
     const Views = () => {
 
@@ -887,7 +838,7 @@ function Customviews() {
 
     useEffect(() => {
         Views()
-        getViews()
+        drawView()
     }, [])
 
 
@@ -1314,14 +1265,6 @@ function Customviews() {
     </div>
 
 
-    const DeleteView = () => <form onSubmit={e => deleteView(e, id)}>
-        <Button block="true" type="submit"  >
-            Poista näkymä
-        </Button>
-        <p>Jaa näkymä: <a>http://localhost:3000/customviewbyid?id={linkID}</a></p>
-    </form>
-
-
     if (isloading) {
         return (
             <>
@@ -1333,10 +1276,6 @@ function Customviews() {
     else {
         return (
             <>
-                <div className="container-fluid py-5">
-                    {views.map(CreateButtons, this)}
-                    {showDelete ? <DeleteView /> : null}
-                </div>
                 <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
                     {V1 ? <DrawChartV1 /> : null}
                     {V3 ? <DrawChartV3 /> : null}
@@ -1353,4 +1292,4 @@ function Customviews() {
 
 }
 
-export default Customviews
+export default CustomViewByID

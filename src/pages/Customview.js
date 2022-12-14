@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from "chart.js";
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 Chart.register(zoomPlugin)
@@ -70,13 +71,7 @@ function CustomView() {
   const [years, setYears] = useState({})
   const [country, setCountry] = useState([])
   const [V9Data, setV9Data] = useState([])
-  const [textV1, setTextV1] = useState("")
-  const [textV3, setTextV3] = useState("")
-  const [textV5, setTextV5] = useState("")
-  const [textV6, setTextV6] = useState("")
-  const [textV7, setTextV7] = useState("")
-  const [textV8, setTextV8] = useState("")
-  const [textV9, setTextV9] = useState("")
+  const [linkID, setLinkID] = useState(0)
 
   //Customview -muuttujat
   const [V1text, setV1text] = useState("")
@@ -86,9 +81,9 @@ function CustomView() {
   const [V7text, setV7text] = useState("")
   const [V8text, setV8text] = useState("")
   const [V9text, setV9text] = useState("")
-  const [gridview, setgridview] = useState(false)
   const [showSaveButton, setShowSaveButton] = useState(false)
-  const [id, setID] = useState(0)
+  const [showShareButton, setShowShareButton] = useState(false)
+  const [showLink, setShowLink] = useState(false)
   const [owner, setOwner] = useState(localStorage.getItem("token"))
 
 
@@ -127,6 +122,8 @@ function CustomView() {
   const requestV7 = axios.get(V7Data);
   const requestV10 = axios.get(V10);
 
+
+
   //V1 ja 2 kutsut
   const Chart = () => {
 
@@ -140,7 +137,7 @@ function CustomView() {
       for (const dataObj of responses[2].data) {
         dataV1.push(convert(dataObj))
       }
-     //Asetetaan data kaaviolle
+      //Asetetaan data kaaviolle
       setChartData({
         datasets: [
           {
@@ -252,6 +249,7 @@ function CustomView() {
         dataV3.push(giveValueHigh(dataObj))
 
       }
+      //Asetetaan data kaaviolle
       setChartV3M({
         datasets: [
           {
@@ -347,6 +345,7 @@ function CustomView() {
         }
         const yearReverse = [...year].reverse();
         const ppmvReverse = [...ppmv].reverse();
+        //Asetetaan data kaaviolle
         setChartV5({
           labels: yearReverse,
           datasets: [
@@ -374,6 +373,7 @@ function CustomView() {
 
         const yearReverse = [...year1].reverse();
         const co2Reverse = [...co2_ppm].reverse();
+        //Asetetaan data kaaviolle
         setChartV6({
           labels: yearReverse,
           datasets: [
@@ -402,6 +402,7 @@ function CustomView() {
 
         dataV7A.push(giveValue(dataObj))
       }
+      //Asetetaan data kaaviolle
       setChartV7(dataV7A)
     })).catch(error => {
       alert(error)
@@ -415,7 +416,7 @@ function CustomView() {
         for (const dataObj of response.data) {
           yearV8.push(dataObj.year)
         }
-
+        //Asetetaan data kaaviolle
         setYears(yearV8)
 
 
@@ -427,6 +428,7 @@ function CustomView() {
     axios.get("http://localhost:8080/v8/climateV8countries")
       .then(response => {
         for (const dataObj of response.data) {
+          //Asetetaan maat muuttujaan
           setCountry(country => [...country, dataObj.country.replace('\r', '')])
         }
       }).catch(error => {
@@ -440,6 +442,7 @@ function CustomView() {
           sector.push(dataObj.sector)
           emissions.push(dataObj.emissions)
         }
+        //Asetetaan data kaaviolle
         setV9Data({
           labels: sector,
           datasets: [{
@@ -461,11 +464,14 @@ function CustomView() {
 
   }
 
+  //Muutetaan maiden alkukirjaimet pieniksi
   const countries = country.map(element => {
     return element.toLowerCase();
   })
 
+  //Laitetaan maat aakkosjärjestykseen
   country.sort()
+  //Funktio värien arpomiselle
   let dynamicColors = function () {
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
@@ -473,6 +479,7 @@ function CustomView() {
     return "rgb(" + r + ',' + g + ',' + b + ")";
   }
 
+  //Käydään läpi maat ja asetetaan arvottu väri, sekä datasettiin sopiva muoto kaavioon
   for (let i = 0; i < country.length; i++) {
     let coloR = []
     coloR.push(dynamicColors())
@@ -494,6 +501,8 @@ function CustomView() {
     })
   }
 
+  //Tarkistetaan onko kuvaustekstikentissä tekstiä. Jos tekstiä on, asetetaan se tekstimuutujaan ja jos kenttää muokataan, asetetaan näkymämuuttuja falseksi, jolloin kaaviot menevät
+  //piiloon uutta näkymän luontia varten
   function checkTextV1(t) {
     if (createView) {
       setCreateView(false)
@@ -537,6 +546,9 @@ function CustomView() {
     setV9text(t)
   }
 
+  // Katsotaan onko kaavionappi valittu vai ei. Jos nappi on päällä, asetetaan sen arvoksi true, jolloin se piirretään ruudulle näkymän luonti -nappia painettaessa
+  // Jos nappi ei ole päällä, kaaviota ei piirretä 
+  // Kuvaus koskee kaikkia "handleChange" -muuttujia
   const handleChangeV1 = event => {
     if (event.target.checked) {
       setV1(true)
@@ -548,11 +560,16 @@ function CustomView() {
       setV1(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
+
     }
 
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -570,11 +587,15 @@ function CustomView() {
       setV3(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -591,11 +612,15 @@ function CustomView() {
       setV5(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -612,11 +637,15 @@ function CustomView() {
       setV6(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -633,11 +662,15 @@ function CustomView() {
       setV7(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -654,11 +687,15 @@ function CustomView() {
       setV8(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
@@ -675,15 +712,20 @@ function CustomView() {
       setV9(true)
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
 
   }
+  //Tämä toimii samalla tavalla kuin ylemmät "handle" -muuttujat. Tässä vain katsotaan onko grid view toiminto valittuna. Jos on, näytetään kaaviot rinnakkain.
   const handleChangeGridView = event => {
     if (event.target.checked) {
       setGridView(true)
@@ -691,22 +733,29 @@ function CustomView() {
     if (V1 && createView || V3 && createView || V5 && createView || V6 && createView || V7 && createView || V8 && createView || V9 && createView) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
       setGridView(true)
     }
     if (V1 && gridView === false || V3 && gridView === false || V5 && gridView === false || V6 && gridView === false || V7 && gridView === false || V8 && gridView === false || V9 && gridView === false) {
       setCreateView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
       setGridView(true)
     }
     else {
       setGridView(false)
       setShowSaveButton(false)
+      setShowLink(false)
+      setShowShareButton(false)
 
     }
   }
 
+  //"Luo näkymä" -painiketta painettaessa katsotaan onko kaavioiden boolean -muuttujat totta vai ei. Jos yksikin on true, piirretään kaavio.
   function handleClick(e) {
     e.preventDefault()
     if (V1 || V3 || V5 || V6 || V7 || V8 || V9) {
@@ -715,6 +764,7 @@ function CustomView() {
     }
   }
 
+  //Tässä "tallenna näkymä" -painiketta painettaessa näkymä tallennetaan parametreina tietokantaan
   function saveView(e) {
     e.preventDefault()
     axios.post("http://localhost:8080/customview/create", {},
@@ -738,14 +788,39 @@ function CustomView() {
           gridView
         }
       }
+
+
     ).then(response => {
+      alert("Näkymä tallennettu")
+      setShowShareButton(true)
       console.log(response)
     }).catch(error => {
-      alert("Tallennus epäonnistui")
-      console.log(error)
-    })
+        alert("Tallennus epäonnistui")
+        console.log(error)
+      })
+
+
   }
 
+  function shareView(e) {
+    e.preventDefault()
+  
+    axios.get("http://localhost:8080/customview/owner?owner=" + localStorage.getItem("token"))
+      .then(response => {
+        console.log(response.data.length)
+        console.log(response.data[response.data.length - 1])
+        setLinkID(response.data[response.data.length - 1].id)
+        setShowLink(true)
+        setisloading(false)
+      }).catch(error => {
+        console.log(error)
+      })
+
+
+  }
+
+  //V9 kaavion sektoreita painettaessa kaavion options muutujaan on laitettu asetus, jolla se tunnistaa klikkauksen ja katsoo sektorin tiedoista kentän nimen,
+  //jonka perusteella kaavion dataan päivitetään uudet arvot, jolla nähdään sektorin alasektorit, mikäli sellaisia on. Jos sektorilla ei ole alasektoreita, mitään ei tapahdu
   function subSectors(e) {
     let subEmissions = []
     let subSectors = []
@@ -967,6 +1042,8 @@ function CustomView() {
     }
   }
 
+  //V9-kaaviossa, kun painetaan takaisin-painiketta, mennään tähän funktioon jolloin kaavion ensimmäisen kentän labelia (V9Data.labels[0]) vertaillaan,
+  //jonka mukaan asetetaan aina edellinen näkymä.
   function mainView(e) {
     e.preventDefault();
     let subEmissions = []
@@ -1056,6 +1133,7 @@ function CustomView() {
     Chart()
   }, [])
 
+  //Alla asetusmuuttujia ja datamuuttujia kaavioille
   const options = {
     responsive: true,
     showLine: true,
@@ -1390,6 +1468,8 @@ function CustomView() {
 
   //---------------------------------------------------------------------------------------------------------------------
 
+  //"Draw" -funktiot on tehty jokaiselle kaaviolle omaksi. Nämä siis piirtävät kaavion kun alhaalla returnissa on ternary-operaatio, jossa vertaillaan muuttujia ja niiden mukaan piirretään
+  //tietyt kaaviot 
   const DrawChartV1 = () => <div id='chart' className="p-5 mb-4 bg-light rounded-3">
     <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
     <p>(V1) Mittaustulosten kuvaus: <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>https://www.metoffice.gov.uk/hadobs/hadcrut5</a></p>
@@ -1477,23 +1557,37 @@ function CustomView() {
     </form>
   </div>
 
+  //Kun näkymä on luotu, tulee "Tallenna näkymä" -näppäin esiin
   const ShowSaveButton = () => <Form id='buttons' onSubmit={saveView}>
     <Button block="true" type="submit"  >
       Tallenna näkymä
     </Button>
   </Form>
 
+  const ShowShareButton = () => <Form id='buttons' onSubmit={shareView}>
+    <Button block="true" type="submit"  >
+      Jaa näkymä
+    </Button>
+  </Form>
+
+  const ShowLink = () =>
+    <p>http://localhost:3000/customviewbyid?id={linkID}</p>
+
+
+
+  //Jos sivun axios-kutsut ovat kesken, näytetään sivulla teksti "Loading..."
   if (isloading === true) {
     return (
-      <p>Loading</p>
+      <p>Loading...</p>
     )
   }
 
+  //Kun axios-kutsut ovat valmiita, palautetaan sivulle alla olevat elementit
   else {
     return (
       <>
         <div id='chart' style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }} className="p-5 mb-4 bg-light rounded-3">
-          <div  className="form-check form-switch container-fluid py-5">
+          <div className="form-check form-switch container-fluid py-5">
             <table>
               <tr>
                 <td>
@@ -1566,9 +1660,13 @@ function CustomView() {
                 Luo näkymä
               </Button>
             </Form>
-            {(showSaveButton) ? <ShowSaveButton /> : null}
+            {/* Tässä katsotaan, onko "showSaveButton"-muuttuja true vai false. Jos se on true näytetään tallenna -painike, jos false, niin ei näytetä*/}
+            {showSaveButton ? <ShowSaveButton /> : null}
+            {showShareButton ? <ShowShareButton /> : null}
+            {showLink ? <ShowLink /> : null}
           </div>
         </div>
+        {/* Alla vertaillaan kaavion piirtoon määriteltyjä muuttujia, joiden mukaan ne piirretään sivulle */}
         <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
           {(V1 && createView) ? <DrawChartV1 /> : null}
           {(V3 && createView) ? <DrawChartV3 /> : null}

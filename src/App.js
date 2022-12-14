@@ -8,7 +8,8 @@ import Menu from './components/Menu';
 import Emission from './pages/Emission';
 import Customview from './pages/Customview';
 import Customviews from './pages/Customviews';
-import { Routes, Route, Navigate, Redirect, Router } from 'react-router-dom';
+import CustomViewByID from './pages/CustomViewById';
+import { Routes, Route, Navigate, Redirect, Router, useSearchParams } from 'react-router-dom';
 import Logout from './pages/Logout';
 import Register from './pages/Register';
 import DeleteAccount from './pages/DeleteAccount';
@@ -20,29 +21,32 @@ import { auth } from './components/useAuth';
 
 function App() {
   const auth = useAuth()
+  const [searchParams, setSearchParams] = useSearchParams();
+  searchParams.get("id")
 
   return (
-    <> 
-    {auth ? <NavBar/> : <NotAuthNavBar/> }
+    <>
+      {auth ? <NavBar /> : <NotAuthNavBar />}
       <div>
-         
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='*' element={<NotFound />} />
-            <Route path='/menu' element={<Menu />} />
-            <Route path='/globaltemp' element={<Temperature />} />
-            <Route path='/emission' element={<Emission />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/customview' element={<Customview />} />
-            <Route path='/customviews' element={<Customviews />} />
-            <Route path='/logout' element={<Logout />}/>
-            <Route path='/register' element={<Register />} />
-            <Route path='/deleteuser' element={<DeleteAccount />} />
-          </Routes>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
+          <Route path='/menu' element={<Menu />} />
+          <Route path='/globaltemp' element={<Temperature />} />
+          <Route path='/emission' element={<Emission />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/customview' element={<Customview />} />
+          <Route path='/customviews' element={<Customviews />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/deleteuser' element={<DeleteAccount />} />
+          <Route path='/customviewbyid' element={<CustomViewByID />} />
+        </Routes>
       </div>
     </>
   );
 }
+
 
 export default App;
