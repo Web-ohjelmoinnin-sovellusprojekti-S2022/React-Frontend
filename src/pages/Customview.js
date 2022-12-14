@@ -100,7 +100,7 @@ function CustomView() {
   let emissions = []
   let sector = []
 
-  //V1 ja V2 kutsut
+  //V1 ja V2 kutsut ja linkit
   let V1Axios = "http://localhost:8080/v1/climateV1"
   let V1M = "http://localhost:8080/v1/climateV1monthly"
   let V2Data = "http://localhost:8080/v2/climateV2"
@@ -108,7 +108,7 @@ function CustomView() {
   const requestV1M = axios.get(V1M);
   const requestV2 = axios.get(V2Data);
 
-  //V3 kutsut
+  //V3 kutsut ja linkit
   let one = "http://localhost:8080/v3/climateV3"
   let two = "http://localhost:8080/v3/climateV3monthly"
   let three = "http://localhost:8080/v4/climateV4"
@@ -116,7 +116,7 @@ function CustomView() {
   const requestTwo = axios.get(two);
   const reuestThree = axios.get(three);
 
-  //V7 ja 10 kutsut
+  //V7 ja 10 kutsut ja linkit
   let V7Data = "http://localhost:8080/v7/climateV7"
   let V10 = "http://localhost:8080/v10/climateV10"
   const requestV7 = axios.get(V7Data);
@@ -124,9 +124,8 @@ function CustomView() {
 
 
 
-  //V1 ja 2 kutsut
   const Chart = () => {
-
+    //axios.all hakee järjestyksessä tiedot osoitteista "responses" muuttujaan
     axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
       for (const dataObj of responses[0].data) {
         dataV1.push(convertYearly(dataObj))
@@ -802,6 +801,8 @@ function CustomView() {
 
   }
 
+  //Tätä funktiota kutsuttaessa asetetaan ShowLink- muuttuja trueksi, jolloin linkki piirtyy sivlle
+  //Lisäksi LinkId asetetaan tässä, joka myöhemmin asetetaan linkin loppuun parametriksi get-kutsulle
   function shareView(e) {
     e.preventDefault()
   
@@ -1443,6 +1444,8 @@ function CustomView() {
 
   };
 
+  //Laitetaana vuoden string-muutujaksi ja paloitellaan se ","- merkin kohdilta
+  //Sitten asetetaan tiedot data-muuttujaan
   let jaa = years.toString()
   let yearV8Split = jaa.split(',')
   const data = {

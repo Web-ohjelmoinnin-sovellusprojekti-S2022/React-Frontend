@@ -13,6 +13,7 @@ import { useSearchParams } from "react-router-dom";
 
 function CustomViewByID() {
 
+    //Rekisteröidään zoomplugin käyttöön
     Chart.register(zoomPlugin)
 
     //Annetaan arvo ihmiskunnan merkkipaaluille, jotta ne näkyvät kaavioissa sopivalla korkeudella
@@ -122,7 +123,7 @@ function CustomViewByID() {
     const requestV7 = axios.get(V7Data);
     const requestV10 = axios.get(V10);
 
-
+    //Haetaan idn arvo useSearchParamsin avulla
     const [searchParams, setSearchParams] = useSearchParams();
     searchParams.get("id")
     
@@ -130,6 +131,8 @@ function CustomViewByID() {
     
 
     function drawView() {
+        //Jos id on joku muu kuin undefined, haetaan data axios getin avulla ja asetetaan arvot
+        //muuttujiiin jotka määrittävät mitkä kaaviot piirretään
         if(searchParams != undefined){
             axios.get("http://localhost:8080/customview/id?" + searchParams)
             .then(response => {
@@ -159,9 +162,9 @@ function CustomViewByID() {
         
     }
 
-
+// Viewsissä haetaan kaikki data kaavioihin
     const Views = () => {
-
+        //axios.all hakee järjestyksessä tiedot osoitteista "responses" muuttujaan
         axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
             for (const dataObj of responses[0].data) {
                 dataV1.push(convertYearly(dataObj))
@@ -495,18 +498,21 @@ function CustomViewByID() {
 
 
     }
+    //Muutetaan maiden alkukirjaimet pieniksi
     const countries = country.map(element => {
         return element.toLowerCase();
     })
 
+    //Laitetaan maat aakkosjärjestykseen
     country.sort()
+    //Funktio värien arpomiselle
     let dynamicColors = function () {
         let r = Math.floor(Math.random() * 255);
         let g = Math.floor(Math.random() * 255);
         let b = Math.floor(Math.random() * 255);
         return "rgb(" + r + ',' + g + ',' + b + ")";
     }
-
+  //Käydään läpi maat ja asetetaan arvottu väri, sekä datasettiin sopiva muoto kaavioon
     for (let i = 0; i < country.length; i++) {
         let coloR = []
         coloR.push(dynamicColors())
@@ -527,7 +533,8 @@ function CustomViewByID() {
             },
         })
     }
-
+    //V9-kaaviossa, kun painetaan takaisin-painiketta, mennään tähän funktioon jolloin kaavion ensimmäisen kentän labelia (V9Data.labels[0]) vertaillaan,
+    //jonka mukaan asetetaan aina edellinen näkymä.
     function mainView(e) {
         e.preventDefault();
         let subEmissions = []
@@ -612,8 +619,8 @@ function CustomViewByID() {
 
     }
 
-
-
+    //V9 kaavion sektoreita painettaessa kaavion options muutujaan on laitettu asetus, jolla se tunnistaa klikkauksen ja katsoo sektorin tiedoista kentän nimen,
+    //jonka perusteella kaavion dataan päivitetään uudet arvot, jolla nähdään sektorin alasektorit, mikäli sellaisia on. Jos sektorilla ei ole alasektoreita, mitään ei tapahdu
     function subSectors(e) {
         let subEmissions = []
         let subSectors = []
@@ -841,7 +848,7 @@ function CustomViewByID() {
         drawView()
     }, [])
 
-
+    //Alla asetusmuuttujia ja datamuuttujia kaavioille
     const options = {
         responsive: true,
         showLine: true,
@@ -1176,7 +1183,8 @@ function CustomViewByID() {
 
     //---------------------------------------------------------------------------------------------------------------------
 
-
+    //"Draw" -funktiot on tehty jokaiselle kaaviolle omaksi. Nämä siis piirtävät kaavion kun alhaalla returnissa on ternary-operaatio, jossa vertaillaan muuttujia ja niiden mukaan piirretään
+    //tietyt kaaviot 
     const DrawChartV1 = () => <div id='chart' className="p-5 mb-4 bg-light rounded-3">
         <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
         <p>(V1) Mittaustulosten kuvaus: <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>https://www.metoffice.gov.uk/hadobs/hadcrut5</a></p>
@@ -1264,7 +1272,7 @@ function CustomViewByID() {
         </form>
     </div>
 
-
+    //Jos sivun axios-kutsut ovat kesken, näytetään sivulla teksti "Loading..."
     if (isloading) {
         return (
             <>
@@ -1273,9 +1281,11 @@ function CustomViewByID() {
         )
     }
 
+    //Kun axios-kutsut ovat valmiita, palautetaan sivulle alla olevat elementit
     else {
         return (
             <>
+                {/* Alla vertaillaan kaavion piirtoon määriteltyjä muuttujia, joiden mukaan ne piirretään sivulle */}
                 <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
                     {V1 ? <DrawChartV1 /> : null}
                     {V3 ? <DrawChartV3 /> : null}

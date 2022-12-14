@@ -7,6 +7,7 @@ import { Button } from 'react-bootstrap';
 
 
 const Emission = () => {
+  //Tilamuuttujia kaavioille
   const [chartDataV8, setChartDataV8] = useState({})
   const [years, setYears] = useState({})
   const [country, setCountry] = useState([])
@@ -15,11 +16,13 @@ const Emission = () => {
   const [viewData, setViewData] = useState([])
   let datasets = []
 
+  //Rekisteröidään zoomplugin käyttöön
   Chart.register(zoomPlugin)
 
+  //Funktio V8 -näkymälle
   const V8 = () => {
     let yearV8 = []
-
+    //Haetaan data axios getillä
     axios.get("http://localhost:8080/v8/climateV8")
       .then(response => {
         setChartDataV8(response.data)
@@ -27,7 +30,7 @@ const Emission = () => {
         for (const dataObj of response.data) {
           yearV8.push(dataObj.year)
         }
-
+        //Asetetaan vuodet tilamuuttujaan
         setYears(yearV8)
 
 
@@ -38,10 +41,12 @@ const Emission = () => {
       })
 
   }
+  //Funktio V8 maiden hakemiseen
   const V8Countries = () => {
     axios.get("http://localhost:8080/v8/climateV8countries")
       .then(response => {
         for (const dataObj of response.data) {
+          //Asetetaan maat ilman rivinvaihtoa country -tilamuuttujaan
           setCountry(country => [...country, dataObj.country.replace('\r', '')])
         }
       }).catch(error => {
@@ -54,17 +59,20 @@ const Emission = () => {
  
 
 
-
+  //Funktio V9 datalle
   const V9 = () => {
     let emissions = []
     let sector = []
 
+    //Haetaan data axios getillä
     axios.get("http://localhost:8080/v9/climateV9sector")
       .then(response => {
         for (const dataObj of response.data) {
+          //Asetetaan sektorit ja päästöarvot listoihin
           sector.push(dataObj.sector)
           emissions.push(dataObj.emissions)
         }
+        //Asetetaan V9 -kaaviolle data
         setV9Data({
           labels: sector,
           datasets: [{
@@ -83,11 +91,15 @@ const Emission = () => {
 
   }
 
+  //Muutetaan maiden alkukirjaimet pieniksi
   const countries = country.map(element => {
     return element.toLowerCase();
   })
 
+  //Laitetaan maat aakkosjärjestykseen
   country.sort()
+
+  //Funktio värien arpomiselle
   let dynamicColors = function () {
     let r = Math.floor(Math.random() * 255);
     let g = Math.floor(Math.random() * 255);
@@ -95,6 +107,7 @@ const Emission = () => {
     return "rgb(" + r + ',' + g + ',' + b + ")";
   }
 
+  //Käydään läpi maat ja asetetaan arvottu väri, sekä datasettiin sopiva muoto kaavioon
   for (let i = 0; i < country.length; i++) {
     let coloR = []
     coloR.push(dynamicColors())
@@ -156,6 +169,9 @@ const Emission = () => {
     }
   };
 
+
+  //V9 kaavion sektoreita painettaessa kaavion options muutujaan on laitettu asetus, jolla se tunnistaa klikkauksen ja katsoo sektorin tiedoista kentän nimen,
+  //jonka perusteella kaavion dataan päivitetään uudet arvot, jolla nähdään sektorin alasektorit, mikäli sellaisia on. Jos sektorilla ei ole alasektoreita, mitään ei tapahdu
   function subSectors(e) {
     let subEmissions = []
     let subSectors = []
@@ -380,6 +396,8 @@ const Emission = () => {
     }
   }
 
+  //V9-kaaviossa, kun painetaan takaisin-painiketta, mennään tähän funktioon jolloin kaavion ensimmäisen kentän labelia (V9Data.labels[0]) vertaillaan,
+  //jonka mukaan asetetaan aina edellinen näkymä.
   function mainView(e) {
     e.preventDefault();
     let subEmissions = []
@@ -465,7 +483,7 @@ const Emission = () => {
 
   }
 
-
+  //Alla asetusmuuttujia ja datamuuttujia kaavioille
   const optionsV9 = {
     type: 'doughnut',
     responsive: true,
@@ -494,12 +512,14 @@ const Emission = () => {
     V9()
   }, [])
 
+  //Jos sivun axios-kutsut ovat kesken, näytetään sivulla teksti "Loading..."
   if (isloading === true) {
     return (
       <p>Loading</p>
     )
   }
   
+  //Kun axios-kutsut ovat valmiita, palautetaan sivulle alla olevat elementit
   else {
     return (
       <>

@@ -7,9 +7,19 @@ import 'chartjs-adapter-luxon';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import { Chart } from "chart.js";
 
+
+//Rekisteröidään zoomplugin käyttöön
 Chart.register(zoomPlugin)
 
+//Annetaan arvo ihmiskunnan merkkipaaluille, jotta ne näkyvät kaavioissa sopivalla korkeudella
+function giveValue(dataObj) {
+    return { ...dataObj, value: 1 }
+}
+function giveValueHigh(dataObj) {
+    return { ...dataObj, value: 350 }
+}
 
+//Funktiot kenttien nimien muuttamiseen ja luxondate kännöksiin
 function convertToLuxonDate(dataObj) {
     return { ...dataObj, year: DateTime.fromISO(dataObj.year) }
 }
@@ -34,17 +44,14 @@ function convert(dataObj) {
 function convertM(dataObj) {
     return { ...dataObj, year1: dataObj.year }
 }
-function giveValue(dataObj) {
-    return { ...dataObj, value: 1 }
-}
-function giveValueHigh(dataObj) {
-    return { ...dataObj, value: 350 }
-}
+
 function convertYearly(dataObj) {
     return { ...dataObj, anomalyG: dataObj.anomaly_g, anomalyN: dataObj.anomaly_n, anomalyS: dataObj.anomaly_s }
 }
 
 function Temperature() {
+
+    //Tilamuuttujia kaavioille
     const [chartData, setChartData] = useState({})
     const [chartV3M, setChartV3M] = useState({})
     const [chartV5, setChartV5] = useState({})
@@ -60,7 +67,7 @@ function Temperature() {
     let dataV7A = []
     let V1Years = []
 
-    //V1 ja 2
+    //V1 ja 2 kutsut ja linkit
     let V1Axios = "http://localhost:8080/v1/climateV1"
     let V1M = "http://localhost:8080/v1/climateV1monthly"
     let V2 = "http://localhost:8080/v2/climateV2"
@@ -68,7 +75,7 @@ function Temperature() {
     const requestV1M = axios.get(V1M);
     const requestV2 = axios.get(V2);
 
-    //V3
+    //V3 kutsut ja linkit
     let one = "http://localhost:8080/v3/climateV3"
     let two = "http://localhost:8080/v3/climateV3monthly"
     let three = "http://localhost:8080/v4/climateV4"
@@ -76,15 +83,15 @@ function Temperature() {
     const requestTwo = axios.get(two);
     const reuestThree = axios.get(three);
 
-    //V7 ja 10
+    //V7 ja 10 kutsut ja linkit
     let V7 = "http://localhost:8080/v7/climateV7"
     let V10 = "http://localhost:8080/v10/climateV10"
     const requestV7 = axios.get(V7);
     const requestV10 = axios.get(V10);
 
-
-
+    //Haetaan kaikki data kaavioihin
     const V1 = () => {
+        //Axios.all hakee järjestyksessä tiedot osoitteista "responses" muuttujaan
         axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
             for (const dataObj of responses[0].data) {
                 dataV1.push(convertYearly(dataObj))
@@ -98,7 +105,7 @@ function Temperature() {
                 dataV1.push(convert(dataObj))
                 V1Years.push(dataObj.year)
             }
-
+            //Asetetaan data kaaviolle
             setChartData({
                 datasets: [
                     {
@@ -212,6 +219,7 @@ function Temperature() {
                 dataV3.push(giveValueHigh(dataObj))
 
             }
+         //Asetetaan data kaaviolle
             setChartV3M({
                 datasets: [
                     {
@@ -307,8 +315,12 @@ function Temperature() {
                     year.push(dataObj.year + "BP")
                     ppmv.push(dataObj.ppmv)
                 }
+
+                //Käännetäänä vuodet ja arvot toisinpäin
                 const yearReverse = [...year].reverse();
                 const ppmvReverse = [...ppmv].reverse();
+
+                //Asetetaan data kaaviolle
                 setChartV5({
                     labels: yearReverse,
                     datasets: [
@@ -334,6 +346,8 @@ function Temperature() {
 
                 const yearReverse = [...year1].reverse();
                 const co2Reverse = [...co2_ppm].reverse();
+
+                //Asetetaan data kaaviolle
                 setChartV6({
                     labels: yearReverse,
                     datasets: [
@@ -359,6 +373,8 @@ function Temperature() {
 
                 dataV7A.push(giveValue(dataObj))
             }
+
+            //Asetetaan data kaaviolle
             setChartV7(dataV7A)
             setisloading(false)
         })).catch(error => {
@@ -373,6 +389,7 @@ function Temperature() {
         V1()
     }, [])
 
+    //Alla asetusmuuttujia ja datamuuttujia kaavioille
     const options = {
         responsive: true,
         showLine: true,
@@ -638,13 +655,14 @@ function Temperature() {
     };
 
     //---------------------------------------------------------------------------------------------------------------------
+     //Jos sivun axios-kutsut ovat kesken, näytetään sivulla teksti "Loading..."
     if (isloading === true) {
         return (
             <p>Loading</p>
         )
     }
 
-
+    //Kun axios-kutsut ovat valmiita, palautetaan sivulle alla olevat elementit
     else {
         return (
             <>

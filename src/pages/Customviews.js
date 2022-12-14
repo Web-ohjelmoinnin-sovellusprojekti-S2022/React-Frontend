@@ -126,6 +126,8 @@ function Customviews() {
     const requestV7 = axios.get(V7Data);
     const requestV10 = axios.get(V10);
 
+    //Tämä funktio luo napit jokaiselle näkymälle, mitä käyttäjään tokenilla lydetään
+    //Se saa parametrina arvon, joka määritetään "GetViews" -funktiossa. Sama arvo asetetaan napin nimeen
     function CreateButtons(value) {
         console.log(value)
         return (
@@ -135,7 +137,8 @@ function Customviews() {
         )
 
     }
-
+    //Jos id on joku muu kuin undefined, haetaan data axios getin avulla ja asetetaan arvot
+    //muuttujiiin jotka määrittävät mitkä kaaviot piirretään
     function drawView(e, number) {
         e.preventDefault()
         axios.get("http://localhost:8080/customview/owner?owner=" + localStorage.getItem("token"))
@@ -171,7 +174,8 @@ function Customviews() {
     }
 
 
-
+    //Tässä id annetaan funktiolle parametrina ja se asetetaan linkin perään, jolloin se poistetaan tietokannasta
+    //Lisäksi sivu päivitetään, että tiedot häviävät ruudulta
     function deleteView(e, id) {
         e.preventDefault()
         axios.post("http://localhost:8080/customview/delete?id=" + id)
@@ -187,7 +191,7 @@ function Customviews() {
 
 
 
-
+    //Tässä haetaan kaikki tiedot sisäänkirjautuneesta käyttäjästä. Data asetetaan viewData -muuttujaan joka asetetaan "views" -tilamuuttujaan
     const getViews = () => {
         let viewData = []
         let arvo = 0
@@ -208,9 +212,10 @@ function Customviews() {
                 setisloading(true)
             })
     }
-
+    // Viewsissä haetaan kaikki data kaavioihin
     const Views = () => {
 
+        //axios.all hakee järjestyksessä tiedot osoitteista "responses" muuttujaan
         axios.all([requestV1Axios, requestV1M, requestV2]).then(axios.spread((...responses) => {
             for (const dataObj of responses[0].data) {
                 dataV1.push(convertYearly(dataObj))
@@ -544,18 +549,21 @@ function Customviews() {
 
 
     }
+    //Muutetaan maiden alkukirjaimet pieniksi
     const countries = country.map(element => {
         return element.toLowerCase();
     })
-
+    //Laitetaan maat aakkosjärjestykseen
     country.sort()
+    //Funktio värien arpomiselle
+
     let dynamicColors = function () {
         let r = Math.floor(Math.random() * 255);
         let g = Math.floor(Math.random() * 255);
         let b = Math.floor(Math.random() * 255);
         return "rgb(" + r + ',' + g + ',' + b + ")";
     }
-
+    //Käydään läpi maat ja asetetaan arvottu väri, sekä datasettiin sopiva muoto kaavioon
     for (let i = 0; i < country.length; i++) {
         let coloR = []
         coloR.push(dynamicColors())
@@ -576,7 +584,8 @@ function Customviews() {
             },
         })
     }
-
+    //V9-kaaviossa, kun painetaan takaisin-painiketta, mennään tähän funktioon jolloin kaavion ensimmäisen kentän labelia (V9Data.labels[0]) vertaillaan,
+    //jonka mukaan asetetaan aina edellinen näkymä.
     function mainView(e) {
         e.preventDefault();
         let subEmissions = []
@@ -662,7 +671,8 @@ function Customviews() {
     }
 
 
-
+    //V9 kaavion sektoreita painettaessa kaavion options muutujaan on laitettu asetus, jolla se tunnistaa klikkauksen ja katsoo sektorin tiedoista kentän nimen,
+    //jonka perusteella kaavion dataan päivitetään uudet arvot, jolla nähdään sektorin alasektorit, mikäli sellaisia on. Jos sektorilla ei ole alasektoreita, mitään ei tapahdu
     function subSectors(e) {
         let subEmissions = []
         let subSectors = []
@@ -890,7 +900,7 @@ function Customviews() {
         getViews()
     }, [])
 
-
+    //Alla asetusmuuttujia ja datamuuttujia kaavioille
     const options = {
         responsive: true,
         showLine: true,
@@ -1225,7 +1235,8 @@ function Customviews() {
 
     //---------------------------------------------------------------------------------------------------------------------
 
-
+    //"Draw" -funktiot on tehty jokaiselle kaaviolle omaksi. Nämä siis piirtävät kaavion kun alhaalla returnissa on ternary-operaatio, jossa vertaillaan muuttujia ja niiden mukaan piirretään
+    //tietyt kaaviot 
     const DrawChartV1 = () => <div id='chart' className="p-5 mb-4 bg-light rounded-3">
         <h1>Lämpötilatiedot vuosilta 1850-2022 (v1 ja 2)</h1>
         <p>(V1) Mittaustulosten kuvaus: <a href='https://www.metoffice.gov.uk/hadobs/hadcrut5/'>https://www.metoffice.gov.uk/hadobs/hadcrut5</a></p>
@@ -1321,7 +1332,7 @@ function Customviews() {
         <p>Jaa näkymä: <a>http://localhost:3000/customviewbyid?id={linkID}</a></p>
     </form>
 
-
+    //Jos sivun axios-kutsut ovat kesken, näytetään sivulla teksti "Loading..."
     if (isloading) {
         return (
             <>
@@ -1329,7 +1340,7 @@ function Customviews() {
             </>
         )
     }
-
+    //Kun axios-kutsut ovat valmiita, palautetaan sivulle alla olevat elementit
     else {
         return (
             <>
@@ -1337,6 +1348,7 @@ function Customviews() {
                     {views.map(CreateButtons, this)}
                     {showDelete ? <DeleteView /> : null}
                 </div>
+                {/* Alla vertaillaan kaavion piirtoon määriteltyjä muuttujia, joiden mukaan ne piirretään sivulle */}
                 <div className="container-fluid py-5" id={gridView ? 'grid' : null}>
                     {V1 ? <DrawChartV1 /> : null}
                     {V3 ? <DrawChartV3 /> : null}
