@@ -1,4 +1,4 @@
-GonaCompany Charts - Kaavioadatapalvelu
+GonaCompany Charts - Kaaviodatapalvelu
 =======================================
 
 Tekijät: Mike Huovinen, Julius Häikiö, Ville-Valtteri Yritys, Hermanni Huotari
