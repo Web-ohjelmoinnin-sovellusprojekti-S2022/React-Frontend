@@ -32,7 +32,7 @@ Sovelluksessa on mahdollista luoda omia näkymiä sekä tallentaa ja jakaa niit�
 
 Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä voi valita haluamansa kaaviot näkymälleen ja myös halutessaan asettaa kaavioille omat kuvaustekstit. Painamalla ”Luo näkymä” -nappia sovellus näyttää käyttäjän valitsemat kaaviot halutulla asettelulla joko allekkain tai rinnakkain.
 
-![Image](Kuva6.png)
+![Image](Kuva13.png)
 
 >**Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
 
