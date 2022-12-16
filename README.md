@@ -1,7 +1,7 @@
 GonaCompany Kaaviot – Kaaviodatapalvelu
 =======================================
 
-Tekijät: Mike Huovinen, Julius Häikiö, Ville-Valtteri Yritys, Hermanni Huotari
+Tekijät: [Mike Huovinen](https://github.com/Miekhuovinen), Julius Häikiö, Ville-Valtteri Yritys, Hermanni Huotari
 
 Esittely
 --------
@@ -41,7 +41,7 @@ Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä
 Oma profiili
 --------
 
-Kirjautunut käyttäjä voi selata luomiaan näkymiä oman profiilinsa kautta. Näkymiä on myös mahdollista jakaa linkillä eikä sen katsominen vaadi kirjautumista. Itse tehdyt näkymät voi poistaa halutessaan.
+Kirjautunut käyttäjä voi selata luomiaan näkymiä oman profiilinsa kautta. Näkymiä on myös mahdollista jakaa linkillä eikä niiden katsominen vaadi kirjautumista. Itse tehdyt näkymät voi poistaa halutessaan.
 
 Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myös kaikki kyseisen käyttäjän omat näkymät poistuvat.
 
