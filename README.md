@@ -9,7 +9,7 @@ GonaCompany Charts on Oulun ammattikorkeakoulun 2. vuoden opiskelijoiden kehitt�
 
 Jokainen projektiryhmän jäsen toimi projektissa Full Stack -kehittäjänä, työstäen sekä selain- että palvelinpuolta.
 
-Sovelluksen toteutus
+Sovelluksen käyttöliittymän toteutus
 --------
 
 Lämpötilatiedot
