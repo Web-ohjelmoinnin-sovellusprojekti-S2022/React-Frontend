@@ -57,10 +57,10 @@ Käyttöönotto
 --------
 
 1. Kloonaa repositoriot ([React-Frontend](https://github.com/Web-ohjelmoinnin-sovellusprojekti-S2022/React-Frontend) ja [Java-backend](https://github.com/Web-ohjelmoinnin-sovellusprojekti-S2022/Java-Backend))
-2. Siirry komentokehotteeseen Frontend -kansiossa ja aja komento “npm install” ja tämän jälkeen voit käynistää sovelluksen komennolla “npm start”
-3. Käynnistä MySQL- palvelin
-4. Luo projektin tietokanta ajamalla Backendistä löytyvä [.sql](https://github.com/Web-ohjelmoinnin-sovellusprojekti-S2022/Java-Backend/blob/main/usersdb_2022-12-12_130211.sql)- tiedosto.
-5. Käynnistä Java-palvelin
+2. Siirry komentokehotteeseen Frontend -kansiossa ja aja komento “npm install” ja tämän jälkeen voit käynistää sovelluksen komennolla “npm start”.
+3. Käynnistä MySQL -palvelin.
+4. Luo projektin tietokanta ajamalla Backendistä löytyvä [.sql](https://github.com/Web-ohjelmoinnin-sovellusprojekti-S2022/Java-Backend/blob/main/usersdb_2022-12-12_130211.sql) -tiedosto.
+5. Käynnistä Java-palvelin.
 
 
 [Linkki projektin esittelyvideoon](https://youtu.be/xI85W6zm3Ag?t=87)
