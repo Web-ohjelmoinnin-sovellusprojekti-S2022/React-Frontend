@@ -12,6 +12,34 @@ Sovelluksen toteutus
 
 Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumiseen sekä käyttäjän luomiseen (kuva 1). Lisäksi painikkeiden vieressä on pudotusvalikko, jonka kautta pääsee katsomaan lämpötila- ja päästökaavioita, ja halutessaan käyttäjä voi luoda näistä oman näkymän.
 
-KUVA 1. Käyttöliittymän yläpalkki
-
 ![Image](Kuva1.png)
+
+**KUVA 1.** _Käyttöliittymän yläpalkki_
+
+![Image](Kuva2.png)
+
+**Kuva 2.** _Luo käyttäjä -näkymä_
+
+![Image](Kuva3.png)
+
+**Kuva 3.** _Kirjaudu sisään -näkymä_
+
+![Image](Kuva4.png)
+
+**Kuva 4.** _Lämpötilakaaviot -sivu avattuna_
+
+![Image](Kuva5.png)
+
+**Kuva 5.** _Päästökaaviot -sivu avattuna_
+
+![Image](Kuva6.png)
+
+**Kuva 6.** _Oman näkymän luonti -sivu avattuna_
+
+![Image](Kuva7.png)
+
+**Kuva 7.** _Oman näkymän luonti -sivu avattuna_
+
+
+
+
