@@ -11,6 +11,7 @@ Sovelluksen toteutus
 --------
 
 Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumiseen sekä käyttäjän luomiseen. Lisäksi painikkeiden vieressä on ”Kaaviot” -pudotusvalikko, jonka kautta pääsee katsomaan lämpötila- ja päästökaavioita, ja halutessaan käyttäjä voi luoda näistä oman näkymän. 
+
 Pudotusvalikosta valittu ensimmäinen näkymä ”Lämpötilatiedot ja CO2 pitoisuudet” (kuva 1) näyttää sivulla kaaviot V1–V7 sekä V10. Kaaviot näkyvät allekkain ja käyttöliittymä skaalautuu, mikäli selaimen ikkunan kokoa muutetaan.
 
 
@@ -34,6 +35,9 @@ Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä
 ![Image](Kuva6.png)
 
 **Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
+
+Oma profiili
+--------
 
 Kirjautunut käyttäjä voi selata luomiaan näkymiä oman profiilinsa kautta. Näkymiä on myös mahdollista jakaa linkillä eikä sen katsominen vaadi kirjautumista. Itse tehdyt näkymät voi poistaa halutessaan.
 
