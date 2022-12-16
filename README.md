@@ -17,13 +17,13 @@ Pudotusvalikosta valittu ensimmäinen näkymä ”Lämpötilatiedot ja CO2 pitoi
 
 ![Image](Kuva11.png)
 
-**KUVA 1.** _Lämpötilatietojen CO2 pitoisuuksien näkymä_
+>**KUVA 1.** _Lämpötilatietojen CO2 pitoisuuksien näkymä_
 
 Valikon toisesta näkymästä voi tarkastella CO2-päästölähteitä toimiala- ja maakohtaisesti. (kuva 2)
 
 ![Image](Kuva8.png)
 
-**Kuva 2.** _Päästökaaviot  -sivu avattuna_
+>**Kuva 2.** _Päästökaaviot  -sivu avattuna_
 
 Käyttäjän omat näkymät
 --------
@@ -34,7 +34,7 @@ Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä
 
 ![Image](Kuva6.png)
 
-**Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
+>**Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
 
 Oma profiili
 --------
@@ -45,10 +45,10 @@ Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myö
 
 ![Image](Kuva10.png)
 
-**Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
+>**Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
 
 ![Image](Kuva12.png)
 
-**Kuva 5.** _Sovelluksen tietokantarakenne_
+>**Kuva 5.** _Sovelluksen tietokantarakenne_
 
 [Linkki projektin esittelyvideoon](https://youtu.be/xI85W6zm3Ag?t=87)
