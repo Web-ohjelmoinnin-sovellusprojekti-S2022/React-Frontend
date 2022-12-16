@@ -14,7 +14,7 @@ Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumise
 Pudotusvalikosta valittu ensimmäinen näkymä ”Lämpötilatiedot ja CO2 pitoisuudet” (kuva 1) näyttää sivulla kaaviot V1–V7 sekä V10. Kaaviot näkyvät allekkain ja käyttöliittymä skaalautuu, mikäli selaimen ikkunan kokoa muutetaan.
 
 
-![Image](Kuva1.png)
+![Image](Kuva11.png)
 
 **KUVA 1.** _Lämpötilatietojen CO2 pitoisuuksien näkymä_
 
