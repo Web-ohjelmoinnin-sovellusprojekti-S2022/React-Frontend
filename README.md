@@ -17,7 +17,7 @@ Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumise
 Pudotusvalikosta valittu ensimmäinen näkymä ”Lämpötilatiedot ja CO2 pitoisuudet” (kuva 1) näyttää sivulla kaaviot V1–V7 sekä V10. Kaaviot näkyvät allekkain ja käyttöliittymä skaalautuu, mikäli selaimen ikkunan kokoa muutetaan.
 
 
-![Image](Kuva11.png)
+![Image](Kuvat/Kuva1.png)
 
 >**KUVA 1.** _Lämpötilatietojen CO2 pitoisuuksien näkymä_
 
@@ -25,7 +25,7 @@ Valikon toisesta näkymästä voi tarkastella CO2-päästölähteitä toimiala- 
 
 Näkymästä löytyy pinottu viivagraafi ajan suhteen maakohtaisista CO2-päästöistä (V8) sekä donitsikaavio CO2-päästöistä toimialoittain (V9).
 
-![Image](Kuva8.png)
+![Image](Kuvat/Kuva2.png)
 
 >**Kuva 2.** _Päästökaaviot  -sivu avattuna_
 
@@ -36,7 +36,7 @@ Sovelluksessa on mahdollista luoda omia näkymiä sekä tallentaa ja jakaa niit�
 
 Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä voi valita haluamansa kaaviot näkymälleen ja myös halutessaan asettaa kaavioille omat kuvaustekstit. Painamalla ”Luo näkymä” -nappia sovellus näyttää käyttäjän valitsemat kaaviot halutulla asettelulla joko allekkain tai rinnakkain.
 
-![Image](Kuva13.png)
+![Image](Kuvat/Kuva3.png)
 
 >**Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
 
@@ -47,14 +47,14 @@ Kirjautunut käyttäjä voi selata luomiaan näkymiä oman profiilinsa kautta. N
 
 Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myös kaikki kyseisen käyttäjän omat näkymät poistuvat.
 
-![Image](Kuva10.png)
+![Image](Kuvat/Kuva4.png)
 
 >**Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
 
 Sovelluksen tietokantarakenne
 --------
 
-![Image](Kuva12.png)
+![Image](Kuvat/Kuva5.png)
 
 >**Kuva 5.** _Tietokantarakenne_
 
