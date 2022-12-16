@@ -38,7 +38,7 @@ Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumise
 
 ![Image](Kuva7.png)
 
-**Kuva 7.** _Oman näkymän luonti -sivu avattuna_
+**Kuva 7.** _Tallennettujen näkymien -sivu avattuna_
 
 
 
