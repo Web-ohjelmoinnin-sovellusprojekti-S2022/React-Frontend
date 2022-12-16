@@ -43,4 +43,8 @@ Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myö
 
 **Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
 
+![Image](Kuva10.png)
+
+**Kuva 5.** _Sovelluksen tietokantarakenne_
+
 [Linkki projektin esittelyvideoon](https://www.youtube.com/watch?v=xI85W6zm3Ag)
