@@ -23,6 +23,8 @@ Pudotusvalikosta valittu ensimmäinen näkymä ”Lämpötilatiedot ja CO2 pitoi
 
 Valikon toisesta näkymästä voi tarkastella CO2-päästölähteitä toimiala- ja maakohtaisesti. (kuva 2)
 
+Näkymästä löytyy pinottu viivagraafi ajan suhteen maakohtaisista CO2-päästöistä (V8) sekä donitsikaavio CO2-päästöistä toimialoittain (V9).
+
 ![Image](Kuva8.png)
 
 >**Kuva 2.** _Päästökaaviot  -sivu avattuna_
