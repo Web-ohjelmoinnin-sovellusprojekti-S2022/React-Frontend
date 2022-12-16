@@ -14,15 +14,15 @@ Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumise
 
 ![Image](Kuva1.png)
 
-**KUVA 1.** _Käyttöliittymän yläpalkki_
+**KUVA 1.** _Lämpötilatietojen CO2 pitoisuuksien näkymä_
 
-![Image](Kuva2.png)
+![Image](Kuva8.png)
 
-**Kuva 2.** _Luo käyttäjä -näkymä_
+**Kuva 2.** _Päästökaaviot  -näkymä_
 
-![Image](Kuva3.png)
+![Image](Kuva6.png)
 
-**Kuva 3.** _Kirjaudu sisään -näkymä_
+**Kuva 3.** _Oman näkymän luonti  -sivu avattuna_
 
 ![Image](Kuva4.png)
 
