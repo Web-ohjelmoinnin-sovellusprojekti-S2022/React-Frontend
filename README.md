@@ -37,21 +37,13 @@ Kyseinen toiminto on näkyvissä vain kirjautuneelle käyttäjälle. Käyttäjä
 
 Kirjautunut käyttäjä voi selata luomiaan näkymiä oman profiilinsa kautta. Näkymiä on myös mahdollista jakaa linkillä eikä sen katsominen vaadi kirjautumista. Itse tehdyt näkymät voi poistaa halutessaan.
 
-![Image](Kuva4.png)
+Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myös kaikki kyseisen käyttäjän omat näkymät poistuvat.
+
+![Image](Kuva10.png)
 
 **Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
 
-![Image](Kuva5.png)
 
-**Kuva 5.** _Päästökaaviot -sivu avattuna_
-
-![Image](Kuva6.png)
-
-**Kuva 6.** _Oman näkymän luonti -sivu avattuna_
-
-![Image](Kuva7.png)
-
-**Kuva 7.** _Tallennettujen näkymien -sivu avattuna_
 
 
 
