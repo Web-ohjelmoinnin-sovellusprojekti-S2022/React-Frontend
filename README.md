@@ -1,7 +1,7 @@
 GonaCompany Kaaviot – Kaaviodatapalvelu
 =======================================
 
-Tekijät: [Mike Huovinen](https://github.com/Miekhuovinen), Julius Häikiö, Ville-Valtteri Yritys, Hermanni Huotari
+Tekijät: [Mike Huovinen](https://github.com/Miekhuovinen), [Julius Häikiö](https://github.com/t1haju05), [Ville-Valtteri Yritys](https://github.com/Frostedlol), [Hermanni Huotari](https://github.com/HHuotari)
 
 Esittely
 --------
