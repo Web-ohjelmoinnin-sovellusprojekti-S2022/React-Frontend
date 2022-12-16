@@ -12,7 +12,7 @@ Jokainen projektiryhmän jäsen toimi projektissa Full Stack -kehittäjänä, ty
 Sovelluksen käyttöliittymän toteutus
 --------
 
-Lämpötilatiedot
+Lämpötilatiedot ja CO2-pitoisuudet
 --------
 
 Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumiseen sekä käyttäjän luomiseen. Lisäksi painikkeiden vieressä on ”Kaaviot” -pudotusvalikko, jonka kautta pääsee katsomaan lämpötila- ja päästökaavioita, ja halutessaan käyttäjä voi luoda näistä oman näkymän. 
