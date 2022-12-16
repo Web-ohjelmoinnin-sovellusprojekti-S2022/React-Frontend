@@ -14,4 +14,4 @@ Käyttöliittymän yläpalkista löytyy painikkeet sisään- ja uloskirjautumise
 
 KUVA 1. Käyttöliittymän yläpalkki
 
-![Image](Kuva1.jpg)
+![Image](Kuva1.png)
