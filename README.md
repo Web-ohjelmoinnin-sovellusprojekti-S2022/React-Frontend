@@ -49,9 +49,12 @@ Oman profiilin kautta on myös mahdollista poistaa käyttäjätili, jolloin myö
 
 >**Kuva 4.** _Tallennettujen näkymien -sivu avattuna_
 
+Sovelluksen tietokantarakenne
+--------
+
 ![Image](Kuva12.png)
 
->**Kuva 5.** _Sovelluksen tietokantarakenne_
+>**Kuva 5.** _Tietokantarakenne_
 
 Käyttöönotto
 --------
