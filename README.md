@@ -1,4 +1,4 @@
-GonaCompany Kaaviot - Kaaviodatapalvelu
+GonaCompany Kaaviot – Kaaviodatapalvelu
 =======================================
 
 Tekijät: Mike Huovinen, Julius Häikiö, Ville-Valtteri Yritys, Hermanni Huotari
